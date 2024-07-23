@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Availability Listing Service
+  description: API for listing availabilities
+  version: 1.0.0
+servers:
+  - url: http://localhost:3016
+paths:
+  /availability:
+    get:
+      summary: Lists all availabilities
+      responses:
+        '200':
+          description: List of availabilities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    start_date:
+                      type: string
+                      format: date-time
+                      example: '2024-07-21T14:30:00Z'
+                    end_date:
+                      type: string
+                      format: date-time
+                      example: '2024-07-21T15:30:00Z'
+                    spots:
+                      type: integer
+                      example: 10
+                    cost:
+                      type: number
+                      format: float
+                      example: 29.99
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Error retrieving availabilities

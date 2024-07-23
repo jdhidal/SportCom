@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: Cancel Reservations API
+  description: API for cancelling reservations
+  version: 1.0.0
+paths:
+  /reservations/{id}:
+    delete:
+      summary: Cancel a reservation
+      description: Cancels a reservation by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the reservation to cancel
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Reservation cancelled successfully
+        '500':
+          description: Error cancelling reservation

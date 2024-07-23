@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Facilities Management API
+  description: API for managing facilities, including listing, creating, updating, and deleting facilities.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3007
+    description: Local server
+paths:
+  /facilities:
+    get:
+      summary: List all facilities
+      description: Retrieve a list of all facilities.
+      responses:
+        '200':
+          description: List of facilities retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The ID of the facility.
+                    name:
+                      type: string
+                      description: The name of the facility.
+                    descripcion:
+                      type: string
+                      description: The description of the facility.
+                    tutor:
+                      type: string
+                      description: The tutor associated with the facility.
+                example:
+                  - id: 1
+                    name: Facility Name
+                    descripcion: Description of the facility
+                    tutor: Tutor Name
+        '500':
+          description: Internal server error

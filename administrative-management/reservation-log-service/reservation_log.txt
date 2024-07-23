@@ -1,0 +1,9 @@
+2024-07-22T00:57:30.704Z [reservation_created]: {"facility_name":"Facility Name","user_name":"User Name","reservation_date":"2024-07-21T14:30:00Z","status":"confirmed"}
+2024-07-22T00:57:30.704Z [reservation_created]: {"facility_name":"Facility Name","user_name":"User Name","reservation_date":"2024-07-21T14:30:00Z","status":"confirmed"}
+2024-07-22T00:57:30.705Z [reservation_created]: {"facility_name":"Facility Name","user_name":"User Name","reservation_date":"2024-07-21T14:30:00Z","status":"confirmed"}
+2024-07-22T00:57:30.705Z [reservation_created]: {"facility_name":"Facility Name","user_name":"User Name","reservation_date":"2024-07-21T14:30:00Z","status":"confirmed"}
+2024-07-22T00:57:30.706Z [reservation_deleted]: {"reservationId":1}
+2024-07-22T00:57:30.705Z [reservation_created]: {"facility_name":"Gimnasia","user_name":"Dieho","reservation_date":"2024-08-21T14:30:00Z","status":"confirmed"}
+2024-07-22T00:57:30.705Z [reservation_created]: {"facility_name":"Gimnasia","user_name":"Dieho","reservation_date":"2024-08-21T14:30:00Z","status":"confirmed"}
+2024-07-22T00:57:30.708Z [reservation_canceled]: {"reservationId":1}
+2024-07-22T00:57:30.709Z [reservation_canceled]: {"reservationId":2}

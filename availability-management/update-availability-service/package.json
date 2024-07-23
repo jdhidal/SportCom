@@ -1,0 +1,22 @@
+{
+  "name": "update-availability-service",
+  "version": "1.0.0",
+  "description": "Microservice update-availability-service",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test":"jest"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.4",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mssql": "^11.0.1",
+    "path": "^0.12.7",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
+  }
+}

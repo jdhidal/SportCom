@@ -1,0 +1,73 @@
+const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const mssql = require('mssql');
+const amqp = require('amqplib');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const path = require('path');
+
+dotenv.config();
+
+const app = express();
+const port = 3005;
+
+const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(express.json());
+app.use(cors());  // Enable CORS
+
+const dbConfig = {
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    server: process.env.DB_SERVER,
+    database: process.env.DB_DATABASE,
+    options: {
+      encrypt: true, // For Azure SQL or other encrypted databases
+      trustServerCertificate: true // Trust the server's certificate
+    }
+};
+
+// Connect to the database
+mssql.connect(dbConfig).then(pool => {
+  if (pool.connected) {
+    console.log('Connected to MSSQL');
+  }
+
+  // Endpoint to delete a facility
+  app.delete('/facilities/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      // Execute stored procedure
+      const result = await pool.request()
+        .input('id', mssql.Int, id)
+        .execute('DeleteFacility');  // Name of the stored procedure
+
+      if (result.rowsAffected[0] === 0) {
+        return res.status(404).json({ message: 'Facility not found' });
+      }
+
+      // Send message to RabbitMQ
+      const conn = await amqp.connect(process.env.RABBITMQ_URL);
+      const channel = await conn.createChannel();
+      await channel.assertQueue('facility_deleted');
+      channel.sendToQueue('facility_deleted', Buffer.from(JSON.stringify({ id })));
+      console.log('Message sent to RabbitMQ');
+
+      // Close RabbitMQ connection
+      await channel.close();
+      await conn.close();
+
+      res.status(200).json({ id });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+
+}).catch(err => console.error('Database connection failed:', err));
+
+app.listen(port, () => {
+  console.log(`Service running on http://localhost:${port}`);
+});

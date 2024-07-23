@@ -1,0 +1,40 @@
+openapi: 3.0.0
+info:
+  title: Update Availability Service
+  description: API for updating availability
+  version: 1.0.0
+paths:
+  /availability/{id}:
+    put:
+      summary: Update availability
+      description: Updates an existing availability entry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the availability to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_date:
+                  type: string
+                  format: date
+                end_date:
+                  type: string
+                  format: date
+                spots:
+                  type: integer
+                cost:
+                  type: number
+                  format: decimal
+      responses:
+        '200':
+          description: Availability updated successfully
+        '500':
+          description: Internal server error

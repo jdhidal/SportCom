@@ -1,0 +1,15 @@
+Received a message in facility_created queue: {"name":"Facility Name","descripcion":"Description of the facility","tutor":"Tutor Name"}
+Received a message in facility_created queue: {"name":"Name3","descripcion":"Gimnasia","tutor":"Tutor Name"}
+Received a message in facility_updated queue: {"id":4,"name":"Updated Facility Name","descripcion":"Updated Description","tutor":"Updated Tutor Name"}
+Received a message in facility_deleted queue: {"id":"1"}
+Received a message in facility_deleted queue: {"id":"2"}
+Received a message in facility_created queue: {"name":"Facility Name","descripcion":"Description of the facility","tutor":"Tutor Name"}
+Received a message in facility_created queue: {"name":"Name3","descripcion":"Gimnasia","tutor":"Tutor Name"}
+Received a message in facility_updated queue: {"id":4,"name":"Updated Facility Name","descripcion":"Updated Description","tutor":"Updated Tutor Name"}
+Received a message in facility_deleted queue: {"id":"1"}
+Received a message in facility_deleted queue: {"id":"2"}
+2024-07-22T00:52:17.774Z [facility_created]: {"name":"Facility Name","descripcion":"Description of the facility","tutor":"Tutor Name"}
+2024-07-22T00:52:17.774Z [facility_created]: {"name":"Name3","descripcion":"Gimnasia","tutor":"Tutor Name"}
+2024-07-22T00:52:17.777Z [facility_updated]: {"id":4,"name":"Updated Facility Name","descripcion":"Updated Description","tutor":"Updated Tutor Name"}
+2024-07-22T00:52:17.778Z [facility_deleted]: {"id":"1"}
+2024-07-22T00:52:17.778Z [facility_deleted]: {"id":"2"}

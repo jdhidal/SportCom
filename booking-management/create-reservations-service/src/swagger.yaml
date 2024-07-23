@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  title: Create Reservation API
+  description: API for creating reservations
+  version: 1.0.0
+paths:
+  /reservations:
+    post:
+      summary: Create a new reservation
+      description: Creates a new reservation with the provided details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                facility_name:
+                  type: string
+                  description: Name of the facility being reserved
+                user_name:
+                  type: string
+                  description: Name of the user making the reservation
+                reservation_date:
+                  type: string
+                  format: date-time
+                  description: Date and time of the reservation
+                status:
+                  type: string
+                  description: Status of the reservation
+              required:
+                - facility_name
+                - user_name
+                - reservation_date
+                - status
+      responses:
+        '201':
+          description: Reservation created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the newly created reservation
+        '400':
+          description: Invalid input data
+        '500':
+          description: Internal server error

@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  title: Create Facilities API
+  version: 1.0.0
+paths:
+  /facilities:
+    post:
+      summary: Create a new facility
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Facility Name"
+                descripcion:
+                  type: string
+                  example: "Description of the facility"
+                tutor:
+                  type: string
+                  example: "Tutor Name"
+      responses:
+        '201':
+          description: Facility created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  descripcion:
+                    type: string
+                  tutor:
+                    type: string
+        '500':
+          description: Error creating facility
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

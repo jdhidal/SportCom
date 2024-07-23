@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: Reservation Service
+  description: API for managing reservations
+  version: 1.0.0
+paths:
+  /reservations/{id}/cancel:
+    put:
+      summary: Cancel a reservation
+      description: Update the status of a reservation to 'cancelled'
+      parameters:
+        - name: id
+          in: path
+          description: ID of the reservation to be cancelled
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Reservation successfully cancelled
+        '500':
+          description: Internal server error

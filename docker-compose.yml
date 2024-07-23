@@ -1,0 +1,154 @@
+version: '3.9'  # Actualiza la versión si es necesario
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    container_name: rabbitmq
+
+  # Administrative Management Services
+  availability-log-service:
+    build: ./administrative-management/availability-log-service
+    ports:
+      - "3016:3016"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  facilities-log-service:
+    build: ./administrative-management/facilities-log-service
+    ports:
+      - "3017:3017"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  reservation-log-service:
+    build: ./administrative-management/reservation-log-service
+    ports:
+      - "3018:3018"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  user-log-service:
+    build: ./administrative-management/user-log-service
+    ports:
+      - "3019:3019"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  # Availability Management Services
+  create-availability-service:
+    build: ./availability-management/create-availability-service
+    ports:
+      - "3012:3012"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  delete-availability-service:
+    build: ./availability-management/delete-availability-service
+    ports:
+      - "3013:3013"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+      
+  list-availability-service:
+    build: ./availability-management/list-availability-service
+    ports:
+      - "3015:3015"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  update-availability-service:
+    build: ./availability-management/update-availability-service
+    ports:
+      - "3014:3014"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq      
+
+  # Booking Management Services
+  cancel-reservations-service:
+    build: ./booking-management/cancel-reservations-service
+    ports:
+      - "3009:3009"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  create-reservations-service:
+    build: ./booking-management/create-reservations-service
+    ports:
+      - "3008:3008"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  delete-reservations-service:
+    build: ./booking-management/delete-reservations-service
+    ports:
+      - "3010:3010"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  history-reservations-service:
+    build: ./booking-management/history-reservations-service
+    ports:
+      - "3011:3011"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+      
+  # User Management Services
+  create-user-service:
+    build: ./user-management/create-user-service
+    ports:
+      - "3000:3000"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  login-service:
+    build: ./user-management/login-service
+    ports:
+      - "3001:3001"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  logout-user-service:
+    build: ./user-management/logout-user-service
+    ports:
+      - "3002:3002"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  # Frontend Service
+  frontend:
+    build: ./frontend
+    ports:
+      - "3021:3021"

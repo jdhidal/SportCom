@@ -1,0 +1,34 @@
+/* src/pages/MainPage.css */
+
+.main-page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-page-header {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.main-page-header h1 {
+    margin: 0;
+    color: #333;
+    font-size: 24px;
+}
+
+.main-page-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.main-page-footer {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-top: 1px solid #e1e1e1;
+    text-align: center;
+}
+
+  

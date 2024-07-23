@@ -1,0 +1,2 @@
+2024-07-22T01:14:42.193Z [user-created]: {"email":"adrina@corro.com","name":"Adriana"}
+2024-07-22T01:16:27.036Z [user-login]: {"email":"adrina@corro.com","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkcmluYUBjb3Jyby5jb20iLCJpYXQiOjE3MjE2MTA5ODcsImV4cCI6MTcyMTYxNDU4N30.5gsBhXC3-vDM8w094olrfoyEoaHKOzzWz91iYqu5rRE"}

@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  title: Delete Facilities API
+  version: 1.0.0
+paths:
+  /facilities/{id}:
+    delete:
+      summary: Delete a facility
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Facility deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+        '404':
+          description: Facility not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Error deleting facility
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

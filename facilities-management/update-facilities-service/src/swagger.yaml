@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  title: Facilities Management API
+  description: API for managing facilities, including creating, updating, and deleting facilities.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3006
+    description: Local server
+paths:
+  /facilities/{id}:
+    put:
+      summary: Update a facility
+      description: Update the details of an existing facility.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the facility to update.
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the facility.
+                  example: Updated Facility Name
+                descripcion:
+                  type: string
+                  description: The description of the facility.
+                  example: Updated Description
+                tutor:
+                  type: string
+                  description: The tutor associated with the facility.
+                  example: Updated Tutor Name
+      responses:
+        '200':
+          description: Facility updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  RowsAffected:
+                    type: integer
+                    description: Number of rows affected by the update operation.
+                    example: 1
+        '400':
+          description: Bad request, invalid input
+        '404':
+          description: Facility not found
+        '500':
+          description: Internal server error

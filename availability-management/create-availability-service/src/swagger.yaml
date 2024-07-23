@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: Create Availability Service
+  description: API for creating availability in the system
+  version: 1.0.0
+paths:
+  /availability:
+    post:
+      summary: Create new availability
+      description: Create a new availability record in the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_date:
+                  type: string
+                  format: date
+                  example: "2024-07-01"
+                end_date:
+                  type: string
+                  format: date
+                  example: "2024-07-31"
+                spots:
+                  type: integer
+                  example: 10
+                cost:
+                  type: number
+                  format: decimal
+                  example: 100.00
+      responses:
+        '201':
+          description: Availability created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

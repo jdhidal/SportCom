@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  title: Reservations Service
+  description: API to manage reservations
+  version: 1.0.0
+paths:
+  /reservations:
+    get:
+      summary: List all reservations
+      responses:
+        '200':
+          description: A list of reservations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    facility_name:
+                      type: string
+                    user_name:
+                      type: string
+                    reservation_date:
+                      type: string
+                      format: date-time
+                    status:
+                      type: string

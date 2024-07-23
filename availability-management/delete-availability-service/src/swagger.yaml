@@ -1,0 +1,20 @@
+openapi: 3.0.0
+info:
+  title: Delete Availability Service
+  version: 1.0.0
+paths:
+  /availability/{id}:
+    delete:
+      summary: Delete availability by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID of the availability to delete
+      responses:
+        '200':
+          description: Availability successfully deleted
+        '500':
+          description: Error occurred

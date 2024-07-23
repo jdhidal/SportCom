@@ -1,0 +1,37 @@
+openapi: 3.0.0
+info:
+  title: User Login Service API
+  description: API documentation for the User Login Service that logs login events.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3019
+    description: Local server
+paths:
+  /api-docs:
+    get:
+      summary: API Documentation
+      description: Retrieves the API documentation for the User Login Service.
+      responses:
+        '200':
+          description: API documentation retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Swagger documentation for the User Login Service"
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        messageContent:
+          type: string
+      example:
+        timestamp: "2024-07-21T14:48:00.000Z"
+        messageContent: "Sample login message content"

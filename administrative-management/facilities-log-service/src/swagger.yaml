@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: Facilities API
+  description: API for listing facilities
+  version: 1.0.0
+paths:
+  /facilities:
+    get:
+      summary: Get list of facilities
+      responses:
+        '200':
+          description: A list of facilities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "No facilities available"
+        '500':
+          description: Internal server error
