@@ -3,7 +3,7 @@ const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const path = require('path');
 const cors = require('cors');
-const sql = require('mssql');
+const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
 const amqp = require('amqplib/callback_api');
 require('dotenv').config();
@@ -23,16 +23,12 @@ const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 // Configure Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Configure SQL Server connection
+// Configure MySQL connection
 const dbConfig = {
+  host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  server: process.env.DB_SERVER,
-  database: process.env.DB_DATABASE,
-  options: {
-    encrypt: true, // For Azure SQL or other encrypted databases
-    trustServerCertificate: true // Trust the server's certificate
-  }
+  database: process.env.DB_DATABASE
 };
 
 // Configure RabbitMQ
@@ -47,14 +43,12 @@ app.post('/create', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Connect to the database
-    await sql.connect(dbConfig);
+    const connection = await mysql.createConnection(dbConfig);
 
-    const request = new sql.Request();
-    request.input('name', sql.NVarChar, name);
-    request.input('email', sql.NVarChar, email);
-    request.input('password', sql.NVarChar, hashedPassword);
-
-    const result = await request.execute('sp_createUser');
+    const [result] = await connection.execute(
+      'CALL sp_createUser(?, ?, ?)',
+      [name, email, hashedPassword]
+    );
 
     // Connect to RabbitMQ and send the message
     amqp.connect(rabbitUrl, (error0, connection) => {
@@ -95,15 +89,13 @@ app.post('/create', async (req, res) => {
     });
 
     if (!res.headersSent) {
-      res.status(201).json({ message: 'User created successfully', rowsAffected: result.rowsAffected });
+      res.status(201).json({ message: 'User created successfully', rowsAffected: result.affectedRows });
     }
   } catch (err) {
     console.error('Error creating user:', err);
     if (!res.headersSent) {
       res.status(500).json({ error: 'Error creating user' });
     }
-  } finally {
-    await sql.close();
   }
 });
 
