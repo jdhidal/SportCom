@@ -1,15 +1,13 @@
-// src/components/LoginForm/LoginForm.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Usa useNavigate para redireccionar
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,16 +16,14 @@ const LoginForm = () => {
       const response = await axios.post('http://localhost:3001/login', {
         email,
         password
-      });
-
-      // Guarda el token JWT en una cookie
-      document.cookie = `token=${response.data.token}; path=/`;
+      }, { withCredentials: true }); // Asegúrate de incluir withCredentials aquí
+      console.log('Response:', response);
 
       setMessage('Login successful!');
       navigate('/main'); // Main view
     } catch (error) {
       console.error('Error during login:', error);
-      setMessage('Error logging in');
+      setMessage('Error usuario o contraseña');
     }
   };
 
@@ -58,7 +54,7 @@ const LoginForm = () => {
           <label>Enter your password</label>
         </div>
         <button type="submit">Login</button>
-        <button onClick={() => navigate('/create')}>Create Account</button> {/* Redirige al formulario de registro */}
+        <button onClick={() => navigate('/create')}>Create Account</button>
       </form>
       {message && <p>{message}</p>}
     </div>

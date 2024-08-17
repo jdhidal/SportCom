@@ -14,7 +14,12 @@ const app = express();
 const port = 3001;
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3021', // The URL of frontend
+  credentials: true
+};
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 app.use(cookieParser()); // Cookie middleware
 
@@ -108,9 +113,14 @@ app.post('/login', async (req, res) => {
     if (match) {
       const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-      res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); 
-      res.json({ message: 'Login successful' });
-
+      res.cookie('token', token, { 
+        httpOnly: true, // La cookie no será accesible desde el frontend
+        maxAge: 3600000, // La cookie expirará en 1 hora (3600000 ms)
+        sameSite: 'None', // Permite el envío de cookies entre sitios (necesario si trabajas con CORS)
+        secure: false // Cambia a true si tu aplicación está en HTTPS
+      });
+      res.json({ message: 'Logged in successfully' });
+   
       // Conecta a RabbitMQ y envía el mensaje a la cola de login
       // amqp.connect(rabbitUrl, (error0, connection) => {
       //   if (error0) {
