@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: WebSocket Service API
+  description: API documentation for the WebSocket service
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3004'
+paths:
+  /api-docs:
+    get:
+      summary: Swagger UI documentation
+      description: Provides the Swagger UI documentation for the WebSocket Service
+      responses:
+        '200':
+          description: Swagger UI documentation loaded successfully
+          content:
+            text/html:
+              schema:
+                type: string
+  /message:
+    post:
+      summary: Send a message to all connected clients
+      description: Sends a message to all clients connected to the WebSocket server
+      parameters:
+        - in: query
+          name: token
+          required: true
+          schema:
+            type: string
+          description: JWT token for authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  example: Hello from client!
+                required:
+                  - content
+      responses:
+        '200':
+          description: Message sent successfully
+        '401':
+          description: Unauthorized, invalid or missing JWT token
+        '400':
+          description: Bad request, invalid message format
