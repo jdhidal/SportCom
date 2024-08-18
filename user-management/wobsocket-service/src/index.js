@@ -1,68 +1,54 @@
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const path = require('path');
-const cors = require('cors');
+// src/pages/MainPage.js
 
-dotenv.config();
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header/Header';
+import './MainPage.css'; // Asegúrate de importar el CSS
+import io from 'socket.io-client';
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
-  }
-});
+const MainPage = () => {
+  const [socket, setSocket] = useState(null);
+  const navigate = useNavigate();
 
-// Middleware
-app.use(cors()); // Habilita CORS para todas las solicitudes
-app.use(express.json()); // Permite manejar JSON en el cuerpo de las solicitudes// Load Swagger YAMLconst swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
-
-// Load Swagger YAML
-const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
-
-// Configure Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// WebSocket Authentication Middleware
-io.use((socket, next) => {
-  const token = socket.handshake.query.token;
-
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        returnnext(newError('Authentication error'));
-      }
-      socket.user = decoded;
-      next();
+  useEffect(() => {
+    // Connect to WebSocket server
+    const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
+    const newSocket = io('http://localhost:3004', {
+      query: { token }
     });
-  } else {
-    next(newError('Authentication error'));
-  }
-});
 
-io.on('connection', (socket) => {
-  console.log('New client connected');
+    newSocket.on('connect', () => {
+      console.log('Connected to WebSocket server');
+    });
 
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-  });
+    newSocket.on('message', (data) => {
+      console.log('Message from server:', data);
+    });
 
-  // Handle incoming messages
-  socket.on('message', (data) => {
-    console.log('Message received:', data);
-    // Broadcast message to other clients
-    io.emit('message', data);
-  });
-});
+    setSocket(newSocket);
 
-const port = process.env.PORT || 3004;
-server.listen(port, () => {
-  console.log(`WebSocket service running on http://localhost:${port}`);
-  console.log(`Swagger UI available at http://localhost:${port}/api-docs`);
-});
+    return () => newSocket.close();
+  }, []);
+
+  const handleLogout = () => {
+    // Aquí puedes hacer una llamada al backend para cerrar sesión si es necesario
+    // Luego, redirige al usuario a la página de inicio de sesión
+    navigate('/');
+  };
+
+  return (
+    <div className="main-page-container">
+      <header className="main-page-header">
+        <Header onLogout={handleLogout} />
+      </header>
+      <main className="main-page-content">
+        <h2>Welcome to SportCom!</h2>
+      </main>
+      <footer className="main-page-footer">
+        <p>Footer content</p>
+      </footer>
+    </div>
+  );
+};
+
+export default MainPage;

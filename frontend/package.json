@@ -6,11 +6,11 @@
     "start": "cross-env PORT=3021 react-scripts start"
   },
   "dependencies": {
-    "axios": "^1.7.2",
+    "axios": "^1.7.4",
     "js-cookie": "^3.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.25.1",
+    "react-router-dom": "^6.26.1",
     "react-scripts": "^5.0.1",
     "socket.io-client": "^4.7.5"
   },
