@@ -1,12 +1,17 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { Navigate, Outlet } from 'react-router-dom';
 
-const ProtectedRoute = ({ element: Component }) => {
-  const token = Cookies.get('token');
+const ProtectedRoute = ({ element }) => {
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  };
+
+  const token = getCookie('token');
   console.log('Token:', token); // Verifica el token en la consola
 
-  return token ? Component : <Navigate to="/" />;
+  return token ? element : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

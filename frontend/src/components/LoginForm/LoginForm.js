@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import './LoginForm.css';
 
 const LoginForm = () => {
@@ -17,13 +18,13 @@ const LoginForm = () => {
         email,
         password
       }, { withCredentials: true }); // Asegúrate de incluir withCredentials aquí
-      console.log('Response:', response);
 
       setMessage('Login successful!');
+      Cookies.set('token', response.data.token, { expires: 1, secure: false, sameSite: 'Lax' });
       navigate('/main'); // Main view
     } catch (error) {
       console.error('Error during login:', error);
-      setMessage('Error usuario o contraseña');
+      setMessage('Error logging in');
     }
   };
 
