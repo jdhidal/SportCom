@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "Security",
-        "Create API"
+        "Create API",
+        "Comunication"
     ]
 }

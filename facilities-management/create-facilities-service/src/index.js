@@ -10,7 +10,7 @@ const path = require('path');  // Import the 'path' module
 dotenv.config();
 
 const app = express();
-const port = 3004;
+const port = 3005;
 
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 

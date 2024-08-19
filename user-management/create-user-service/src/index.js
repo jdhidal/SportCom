@@ -81,8 +81,12 @@ app.post('/create', async (req, res) => {
 
           channel.sendToQueue(queue, Buffer.from(message));
           console.log(" [x] Sent %s", message);
+          
+          // Close the connection only after the message is sent
           setTimeout(() => {
-            connection.close();
+            channel.close(() => {
+              connection.close();
+            });
           }, 500);
         });
       });

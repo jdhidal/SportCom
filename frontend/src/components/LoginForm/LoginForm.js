@@ -24,7 +24,7 @@ const LoginForm = () => {
       navigate('/main'); // Main view
     } catch (error) {
       console.error('Error during login:', error);
-      setMessage('Error logging in');
+      setMessage('Contraseña o usuario incorrecto. Ingrese de nuevo');
     }
   };
 

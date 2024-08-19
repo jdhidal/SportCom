@@ -31,12 +31,12 @@ app.use(cors({
 app.use(express.json()); // Para analizar cuerpos JSON
 
 // RabbitMQ configuration
-//const rabbitUrl = process.env.RABBITMQ_URL || 'amqp://localhost';
-//const logoutQueue = 'user-login';
+const rabbitUrl = process.env.RABBITMQ_URL || 'amqp://localhost';
+const logoutQueue = 'user-login';
 
 
 // RabbitMQ consumer to listen for logout messages
-/*const consumeMessages = () => {
+const consumeMessages = () => {
   amqp.connect(rabbitUrl, (error0, connection) => {
     if (error0) {
       console.error('RabbitMQ connection error:', error0);
@@ -69,7 +69,7 @@ app.use(express.json()); // Para analizar cuerpos JSON
     });
   });
 };
-*/
+
 // Logout route
 app.post('/logout', (req, res) => {
     // Borra la cookie 'token' sin necesidad de leer mensajes de RabbitMQ
@@ -80,5 +80,5 @@ app.post('/logout', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Logout service running on http://localhost:${port}`);
-  //consumeMessages(); // Start listening to RabbitMQ messages
+  consumeMessages(); // Start listening to RabbitMQ messages
 });
