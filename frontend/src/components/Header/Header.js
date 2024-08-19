@@ -10,15 +10,15 @@ const Header = ({ onLogout }) => {
   const handleLogout = () => {
     fetch('http://localhost:3002/logout', {
       method: 'POST',
-      credentials: 'include' //Make sure to include cookies in your request
+      credentials: 'include'
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data.message);
-      onLogout(); // Call the onLogout function passed as prop
-      navigate('/'); // Redirects to login after logout
-    })
-    .catch(error => console.error('Error:', error));
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.message);
+        onLogout();
+        navigate('/');
+      })
+      .catch(error => console.error('Error:', error));
   };
 
   const goToFacilitiesForm = () => {
@@ -27,13 +27,13 @@ const Header = ({ onLogout }) => {
 
   const goToReservationForm = () => {
     navigate('/reservations');
-  }
+  };
 
   return (
     <header className="header">
-      <button onClick={goToReservationForm}>Reservations</button>
-      <button onClick={goToFacilitiesForm}>Facilities</button>
-      <button onClick={handleLogout}>Logout</button>
+      <button className="button" onClick={goToReservationForm}>Reservations</button>
+      <button className="button" onClick={goToFacilitiesForm}>Facilities</button>
+      <button className="button logout-button" onClick={handleLogout}>Logout</button>
     </header>
   );
 };

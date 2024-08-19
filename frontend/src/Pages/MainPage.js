@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import Cookies from 'js-cookie';
 import io from 'socket.io-client';
-import './MainPage.css'; // Asegúrate de importar el CSS
+import axios from 'axios';
+import './MainPage.css'; // Import Styles
+import Edificios from './Edificios.jpg';
 
 const MainPage = () => {
   const [messages, setMessages] = useState([]);
+  const [reservations, setReservations] = useState([]);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Aquí puedes hacer una llamada al backend para cerrar sesión si es necesario
-    // Luego, redirige al usuario a la página de inicio de sesión
     navigate('/');
   };
 
@@ -24,7 +25,6 @@ const MainPage = () => {
 
     socket.on('connect', () => {
       console.log('Connected to WebSocket server');
-      // Send a welcome message or any other message to the server upon connection
       socket.emit('message', 'User connected');
     });
 
@@ -41,13 +41,38 @@ const MainPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    axios.get('http://localhost:3011/reservations')
+      .then(response => setReservations(response.data))
+      .catch(error => console.error('Error fetching reservations:', error));
+  }, []);
+
   return (
     <div className="main-page-container">
       <header className="main-page-header">
         <Header onLogout={handleLogout} />
       </header>
       <main className="main-page-content">
-        <h2>Welcome to SportCom!</h2>
+        <div className="welcome-section">
+        <img src={Edificios} alt="Welcome" className="welcome-image" />
+          <h2>Welcome to SportCom!</h2>
+        </div>
+        <h2>Current Reservation</h2>
+        <hr class="custom-line"></hr>
+        <section className="reservations-container">
+          {reservations.length > 0 ? (
+            reservations.map(reservation => (
+              <div className="reservation-card" key={reservation.id}>
+                <h3>{reservation.facility_name}</h3>
+                <p><strong>User:</strong> {reservation.user_name}</p>
+                <p><strong>Date:</strong> {reservation.reservation_date}</p>
+                <p><strong>Status:</strong> {reservation.status}</p>
+              </div>
+            ))
+          ) : (
+            <p>No reservations found.</p>
+          )}
+        </section>
         <ul>
           {messages.map((message, index) => (
             <li key={index}>{message}</li>
