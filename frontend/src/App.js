@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginForm from './components/LoginForm/LoginForm';
 import CreateUserForm from './components/CreateUserForm/CreateUserForm';
 import MainPage from './Pages/MainPage';
+import FacilitiesForm from './components/FacilitiesForm/FacilitiesForm';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
           <Route path="/" element={<LoginForm />} />
           <Route path="/create" element={<CreateUserForm />} />
           <Route path="/main" element={<ProtectedRoute element={<MainPage />} />} />
+          <Route path="/facilities" element={<ProtectedRoute element={<FacilitiesForm />} />} />
         </Routes>
       </div>
     </Router>

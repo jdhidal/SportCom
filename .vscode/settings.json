@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "Security",
         "Create API",
-        "Comunication"
+        "Comunication",
+        "Create Frontend"
     ]
 }

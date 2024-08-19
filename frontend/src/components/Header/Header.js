@@ -20,9 +20,14 @@ const Header = ({ onLogout }) => {
     })
     .catch(error => console.error('Error:', error));
   };
-  
+
+  const goToFacilitiesForm = () => {
+    navigate('/facilities');
+  };
+
   return (
     <header className="header">
+      <button onClick={goToFacilitiesForm}>Facilities</button>
       <button onClick={handleLogout}>Logout</button>
     </header>
   );
