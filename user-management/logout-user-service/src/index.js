@@ -10,7 +10,6 @@ const cors = require('cors'); // Importa cors
 dotenv.config();
 
 const app = express();
-const port = 3002;
 
 // Load Swagger YAML
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
@@ -77,6 +76,7 @@ app.post('/logout', (req, res) => {
     res.json({ message: 'Logout successful' });
 });
   
+const port = process.env.PORT || 3002;
 
 app.listen(port, () => {
   console.log(`Logout service running on http://localhost:${port}`);

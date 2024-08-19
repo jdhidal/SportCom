@@ -11,7 +11,6 @@ const amqp = require('amqplib/callback_api');
 dotenv.config();
 
 const app = express();
-const port = 3001;
 
 // Middleware
 const corsOptions = {
@@ -161,6 +160,8 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
   console.log(`Authentication service running on http://localhost:${port}`);

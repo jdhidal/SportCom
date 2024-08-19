@@ -9,7 +9,7 @@ const amqp = require('amqplib/callback_api');
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+
 
 // Middleware CORS
 app.use(cors());
@@ -102,6 +102,8 @@ app.post('/create', async (req, res) => {
     }
   }
 });
+
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`Service running on http://localhost:${port}`);
