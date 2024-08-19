@@ -10,13 +10,13 @@ const Header = ({ onLogout }) => {
   const handleLogout = () => {
     fetch('http://localhost:3002/logout', {
       method: 'POST',
-      credentials: 'include' // Asegúrate de incluir las cookies en la solicitud
+      credentials: 'include' //Make sure to include cookies in your request
     })
     .then(response => response.json())
     .then(data => {
       console.log(data.message);
-      onLogout(); // Llama a la función onLogout pasada como prop
-      navigate('/'); // Redirige al inicio de sesión después del logout
+      onLogout(); // Call the onLogout function passed as prop
+      navigate('/'); // Redirects to login after logout
     })
     .catch(error => console.error('Error:', error));
   };
@@ -25,8 +25,13 @@ const Header = ({ onLogout }) => {
     navigate('/facilities');
   };
 
+  const goToReservationForm = () => {
+    navigate('/reservations');
+  }
+
   return (
     <header className="header">
+      <button onClick={goToReservationForm}>Reservations</button>
       <button onClick={goToFacilitiesForm}>Facilities</button>
       <button onClick={handleLogout}>Logout</button>
     </header>

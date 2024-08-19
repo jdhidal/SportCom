@@ -18,7 +18,7 @@ const MainPage = () => {
   useEffect(() => {
     const token = Cookies.get('token');
 
-    const socket = io('http://localhost:3004', {
+    const socket = io('http://localhost:3003', {
       query: { token }
     });
 

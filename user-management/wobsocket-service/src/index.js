@@ -1,54 +1,65 @@
-// src/pages/MainPage.js
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const path = require('path');
 
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header/Header';
-import './MainPage.css'; // Asegúrate de importar el CSS
-import io from 'socket.io-client';
+dotenv.config();
 
-const MainPage = () => {
-  const [socket, setSocket] = useState(null);
-  const navigate = useNavigate();
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
-  useEffect(() => {
-    // Connect to WebSocket server
-    const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
-    const newSocket = io('http://localhost:3004', {
-      query: { token }
+// Middleware
+app.use(express.json());
+
+// Load Swagger YAML
+const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
+
+// Configure Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// WebSocket Authentication Middleware
+io.use((socket, next) => {
+  const token = socket.handshake.query.token;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return next(new Error('Authentication error'));
+      }
+      socket.user = decoded;
+      next();
     });
+  } else {
+    next(new Error('Authentication error'));
+  }
+});
 
-    newSocket.on('connect', () => {
-      console.log('Connected to WebSocket server');
-    });
+io.on('connection', (socket) => {
+  console.log('New client connected');
 
-    newSocket.on('message', (data) => {
-      console.log('Message from server:', data);
-    });
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
 
-    setSocket(newSocket);
+  // Handle incoming messages
+  socket.on('message', (data) => {
+    console.log('Message received:', data);
+    // Broadcast message to other clients
+    io.emit('message', data);
+  });
+});
 
-    return () => newSocket.close();
-  }, []);
-
-  const handleLogout = () => {
-    // Aquí puedes hacer una llamada al backend para cerrar sesión si es necesario
-    // Luego, redirige al usuario a la página de inicio de sesión
-    navigate('/');
-  };
-
-  return (
-    <div className="main-page-container">
-      <header className="main-page-header">
-        <Header onLogout={handleLogout} />
-      </header>
-      <main className="main-page-content">
-        <h2>Welcome to SportCom!</h2>
-      </main>
-      <footer className="main-page-footer">
-        <p>Footer content</p>
-      </footer>
-    </div>
-  );
-};
-
-export default MainPage;
+const port = process.env.PORT || 3003;
+server.listen(port, () => {
+  console.log(`WebSocket service running on http://localhost:${port}`);
+});
