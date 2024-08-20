@@ -1,0 +1,19 @@
+/* src/components/UserLogs/UserLogs.css */
+
+.user-logs {
+    padding: 20px;
+  }
+  
+  .user-logs h1 {
+    margin-bottom: 20px;
+  }
+  
+  .user-logs ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-logs li {
+    margin-bottom: 10px;
+  }
+  

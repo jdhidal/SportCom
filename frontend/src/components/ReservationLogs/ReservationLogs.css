@@ -1,0 +1,19 @@
+/* src/components/ReservationLogs/ReservationLogs.css */
+
+.reservation-logs {
+    padding: 20px;
+  }
+  
+  .reservation-logs h1 {
+    margin-bottom: 20px;
+  }
+  
+  .reservation-logs ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .reservation-logs li {
+    margin-bottom: 10px;
+  }
+  

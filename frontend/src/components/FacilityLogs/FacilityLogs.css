@@ -1,0 +1,19 @@
+/* src/components/FacilityLogs/FacilityLogs.css */
+
+.facility-logs {
+    padding: 20px;
+  }
+  
+  .facility-logs h1 {
+    margin-bottom: 20px;
+  }
+  
+  .facility-logs ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .facility-logs li {
+    margin-bottom: 10px;
+  }
+  
