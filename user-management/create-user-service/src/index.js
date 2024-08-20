@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
-const amqp = require('amqplib/callback_api');
+const amqp = require('amqplib');
 require('dotenv').config();
 
 const app = express();
@@ -31,9 +31,6 @@ const dbConfig = {
   database: process.env.DB_DATABASE
 };
 
-// Configure RabbitMQ
-const rabbitUrl = process.env.RABBITMQ_URL || 'amqp://localhost';
-
 // Endpoint to create users
 app.post('/create', async (req, res) => {
   const { name, email, password } = req.body;
@@ -51,46 +48,15 @@ app.post('/create', async (req, res) => {
     );
 
     // Connect to RabbitMQ and send the message
-    amqp.connect(rabbitUrl, (error0, connection) => {
-      if (error0) {
-        console.error('RabbitMQ connection error:', error0);
-        if (!res.headersSent) {
-          return res.status(500).json({ error: 'Error connecting to RabbitMQ' });
-        }
-      }
-
-      connection.createChannel((error1, channel) => {
-        if (error1) {
-          console.error('RabbitMQ channel error:', error1);
-          if (!res.headersSent) {
-            return res.status(500).json({ error: 'Error creating RabbitMQ channel' });
-          }
-        }
-
-        const queue = 'user-created';
-        const message = JSON.stringify({ email, name });
-
-        // Ensure the queue exists
-        channel.assertQueue(queue, { durable: true }, (error2) => {
-          if (error2) {
-            console.error('Error asserting queue:', error2);
-            if (!res.headersSent) {
-              return res.status(500).json({ error: 'Error asserting RabbitMQ queue' });
-            }
-          }
-
-          channel.sendToQueue(queue, Buffer.from(message));
-          console.log(" [x] Sent %s", message);
-          
-          // Close the connection only after the message is sent
-          setTimeout(() => {
-            channel.close(() => {
-              connection.close();
-            });
-          }, 500);
-        });
-      });
-    });
+      const conn = await amqp.connect(process.env.RABBITMQ_URL);
+      const channel = await conn.createChannel();
+      await channel.assertQueue('user-created');
+      channel.sendToQueue('user-created', Buffer.from(JSON.stringify({ name, email, hashedPassword })));
+      console.log('Message sent to RabbitMQ');
+    
+      // Close RabbitMQ connection
+      await channel.close();
+      await conn.close();
 
     if (!res.headersSent) {
       res.status(201).json({ message: 'User created successfully', rowsAffected: result.affectedRows });

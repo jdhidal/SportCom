@@ -2,7 +2,7 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const path = require('path');
-const amqp = require('amqplib/callback_api');
+const amqp = require('amqplib');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser'); // Importa cookie-parser
 const cors = require('cors'); // Importa cors
@@ -29,45 +29,23 @@ app.use(cors({
 // Middleware to parse JSON bodies
 app.use(express.json()); // Para analizar cuerpos JSON
 
-// RabbitMQ configuration
-const rabbitUrl = process.env.RABBITMQ_URL || 'amqp://localhost';
-const logoutQueue = 'user-login';
-
-
 // RabbitMQ consumer to listen for logout messages
-const consumeMessages = () => {
-  amqp.connect(rabbitUrl, (error0, connection) => {
-    if (error0) {
-      console.error('RabbitMQ connection error:', error0);
-      return;
-    }
-    console.log('Connected to RabbitMQ');
-    
-    connection.createChannel((error1, channel) => {
-      if (error1) {
-        console.error('RabbitMQ channel error:', error1);
-        return;
-      }
-      console.log('Channel created');
-      
-      channel.assertQueue(logoutQueue, { durable: true }, (error2) => {
-        if (error2) {
-          console.error('Error asserting queue:', error2);
-          return;
-        }
-        console.log('Queue asserted');
-        
-        channel.consume(logoutQueue, (msg) => {
-          if (msg !== null) {
-            const message = JSON.parse(msg.content.toString());
-            console.log(" [x] Received %s", message);
-            channel.ack(msg);
-          }
-        });
-      });
+const consumeMessages = async () => {
+  try {
+    const conn = await amqp.connect(process.env.RABBITMQ_URL);
+    const channel = await conn.createChannel();
+    await channel.assertQueue('user-login');
+
+    channel.consume('user-login', (msg) => {
+      console.log('Received a message in user_created queue:', msg.content.toString());
     });
-  });
+
+  } catch (err) {
+    console.error('Failed to connect to RabbitMQ:', err);
+  }
 };
+
+consumeMessages();
 
 // Logout route
 app.post('/logout', (req, res) => {
