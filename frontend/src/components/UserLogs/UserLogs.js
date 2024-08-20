@@ -13,6 +13,10 @@ const UserLogs = () => {
       .then(data => setLogs(data))
       .catch(error => console.error('Error fetching user logs:', error));
   }, []);
+  
+  const handleBackClick = () => {
+    navigate('/main');
+  };
 
   return (
     <div className="user-logs">

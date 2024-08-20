@@ -11,6 +11,10 @@ const AvailabilityLogViewer = () => {
             .then(response => setLogs(response.data))
             .catch(error => console.error('Error fetching logs:', error));
     }, []);
+    
+    const handleBackClick = () => {
+        navigate('/main');
+    };
 
     return (
         <div className="log-viewer">

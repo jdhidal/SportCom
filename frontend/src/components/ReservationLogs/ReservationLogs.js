@@ -14,6 +14,10 @@ const ReservationLogs = () => {
       .catch(error => console.error('Error fetching reservation logs:', error));
   }, []);
 
+  const handleBackClick = () => {
+    navigate('/main');
+  };
+
   return (
     <div className="reservation-logs">
       <button className="back-button" onClick={handleBackClick}>Back</button>

@@ -14,6 +14,10 @@ const FacilityLogs = () => {
       .catch(error => console.error('Error fetching facility logs:', error));
   }, []);
 
+  const handleBackClick = () => {
+    navigate('/main');
+  };
+
   return (
     <div className="facility-logs">
       <button className="back-button" onClick={handleBackClick}>Back</button>
