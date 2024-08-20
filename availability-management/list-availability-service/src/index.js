@@ -1,7 +1,7 @@
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
-const mssql = require('mssql');
+const mysql = require('mysql2/promise');
 const amqp = require('amqplib');
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -10,7 +10,6 @@ const path = require('path');
 dotenv.config();
 
 const app = express();
-const port = 3015; // Port for listing service
 
 // Load Swagger documentation
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
@@ -22,66 +21,74 @@ app.use(cors()); // Enable CORS
 
 // Database configuration
 const dbConfig = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.DB_SERVER,
-    database: process.env.DB_DATABASE,
-    options: {
-      encrypt: true, // For Azure SQL or other encrypted databases
-      trustServerCertificate: true // Trust the server's certificate
-    }
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE
 };
 
 // Connect to the database
-mssql.connect(dbConfig).then(pool => {
-  if (pool.connected) {
-    console.log('Connected to MSSQL');
+const connectToDatabase = async () => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    console.log('Connected to MySQL');
+    return connection;
+  } catch (err) {
+    console.error('Database connection failed:', err);
+    throw err;
   }
+};
 
-  // Endpoint to list all reservations
-  app.get('/availability', async (req, res) => {
-    try {
-      const result = await pool.request().query('SELECT * FROM availability');
-      res.status(200).json(result.recordset);
-    } catch (err) {
-      res.status(500).send(err.message);
+// Endpoint to list all availability
+app.get('/availability', async (req, res) => {
+  let connection;
+  try {
+    connection = await connectToDatabase();
+    const [rows] = await connection.execute('SELECT * FROM availability');
+    res.status(200).json(rows);
+  } catch (err) {
+    res.status(500).send(err.message);
+  } finally {
+    if (connection) {
+      await connection.end(); // Close MySQL connection
     }
-  });
+  }
+});
 
-  // RabbitMQ consumer
-  const consumeMessages = async () => {
-    try {
-      const conn = await amqp.connect(process.env.RABBITMQ_URL);
-      const channel = await conn.createChannel();
-      await channel.assertQueue('availability_created');
-      await channel.assertQueue('availability_deleted');
-      await channel.assertQueue('availability_updated');
+// RabbitMQ consumer
+const consumeMessages = async () => {
+  try {
+    const conn = await amqp.connect(process.env.RABBITMQ_URL);
+    const channel = await conn.createChannel();
+    await channel.assertQueue('availability_created');
+    await channel.assertQueue('availability_deleted');
+    await channel.assertQueue('availability_updated');
 
-      channel.consume('availability_created', (msg) => {
-        console.log('Received a message in availability_created queue:', msg.content.toString());
-        // Process the reservation_created message
-      });
+    channel.consume('availability_created', (msg) => {
+      console.log('Received a message in availability_created queue:', msg.content.toString());
+      // Process the message here
+    });
 
-      channel.consume('availability_deleted', (msg) => {
-        console.log('Received a message in availability_deleted queue:', msg.content.toString());
-        // Process the reservation_canceled message
-      });
+    channel.consume('availability_deleted', (msg) => {
+      console.log('Received a message in availability_deleted queue:', msg.content.toString());
+      // Process the message here
+    });
 
-      channel.consume('availability_updated', (msg) => {
-        console.log('Received a message in availability_updated queue:', msg.content.toString());
-        // Process the reservation_deleted message
-      });
+    channel.consume('availability_updated', (msg) => {
+      console.log('Received a message in availability_updated queue:', msg.content.toString());
+      // Process the message here
+    });
 
-    } catch (err) {
-      console.error('Failed to connect to RabbitMQ:', err);
-    }
-  };
+  } catch (err) {
+    console.error('Failed to connect to RabbitMQ:', err);
+  }
+};
 
-  consumeMessages();
+// Start RabbitMQ consumer
+consumeMessages();
 
-}).catch(err => console.error('Database connection failed:', err));
-
+const port = process.env.PORT || 3015;
 // Start the server
 app.listen(port, () => {
-    console.log(`Service running on http://localhost:${port}`);
+  console.log(`Service running on http://localhost:${port}`);
 });
