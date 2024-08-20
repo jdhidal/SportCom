@@ -1,6 +1,0 @@
-2024-07-22T00:39:08.306Z [availability_created]: {"start_date":"2024-07-01","end_date":"2024-07-31","spots":10,"cost":100}
-2024-07-22T00:39:08.306Z [availability_created]: {"start_date":"2024-07-01","end_date":"2024-07-31","spots":25,"cost":200}
-2024-07-22T00:39:08.307Z [availability_created]: {"start_date":"2024-07-01","end_date":"2024-07-31","spots":33,"cost":74}
-2024-07-22T00:39:08.308Z [availability_deleted]: {"id":"1"}
-2024-07-22T00:39:08.309Z [availability_updated]: {"id":"2","start_date":"2024-07-21","end_date":"2024-07-25","spots":10,"cost":100}
-2024-07-22T00:41:48.098Z [availability_created]: {"start_date":"2024-07-01","end_date":"2024-07-31","spots":212,"cost":1}
