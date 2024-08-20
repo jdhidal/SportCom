@@ -10,7 +10,6 @@ const fs = require('fs');
 dotenv.config();
 
 const app = express();
-const port = 3018; // Updated port for the service
 
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 
@@ -60,6 +59,7 @@ const consumeMessages = async () => {
 
 consumeMessages();
 
+const port = process.env.PORT || 3018;
 app.listen(port, () => {
   console.log(`Service running on http://localhost:${port}`);
 });
