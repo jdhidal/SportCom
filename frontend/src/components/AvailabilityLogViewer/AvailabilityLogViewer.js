@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AvailabilityLogViewer.css'; 
 
 const AvailabilityLogViewer = () => {
     const [logs, setLogs] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch logs on component mount

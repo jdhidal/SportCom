@@ -1,10 +1,12 @@
 // src/components/ReservationLogs/ReservationLogs.js
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ReservationLogs.css';
 
 const ReservationLogs = () => {
   const [logs, setLogs] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch reservation logs on component mount

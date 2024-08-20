@@ -1,10 +1,12 @@
 // src/components/FacilityLogs/FacilityLogs.js
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './FacilityLogs.css';
 
 const FacilityLogs = () => {
   const [logs, setLogs] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch facility logs on component mount
