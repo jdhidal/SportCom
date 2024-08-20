@@ -16,6 +16,7 @@ const UserLogs = () => {
 
   return (
     <div className="user-logs">
+      <button className="back-button" onClick={handleBackClick}>Back</button>
       <h1>User Logs</h1>
       <ul>
         {logs.map((log, index) => (

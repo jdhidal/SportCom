@@ -14,6 +14,7 @@ const AvailabilityLogViewer = () => {
 
     return (
         <div className="log-viewer">
+            <button className="back-button" onClick={handleBackClick}>Back</button>
             <h2>Availability Logs</h2>
             <ul>
                 {logs.length > 0 ? (

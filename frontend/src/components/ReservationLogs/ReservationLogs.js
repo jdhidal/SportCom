@@ -16,6 +16,7 @@ const ReservationLogs = () => {
 
   return (
     <div className="reservation-logs">
+      <button className="back-button" onClick={handleBackClick}>Back</button>
       <h1>Reservation Logs</h1>
       <ul>
         {logs.map((log, index) => (
