@@ -1,0 +1,72 @@
+.availability-form {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .availability-form h2,
+  .availability-form h3 {
+    text-align: center;
+  }
+  
+  .availability-form .instructions {
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .availability-form .instructions p {
+    margin: 0;
+  }
+  
+  .availability-form div {
+    margin-bottom: 20px;
+  }
+  
+  .availability-form input {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 5px 0;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .availability-form button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .availability-form ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .availability-form li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .availability-form li button {
+    margin-left: 10px;
+  }
+  
+  .back-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+  

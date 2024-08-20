@@ -29,10 +29,16 @@ const Header = ({ onLogout }) => {
     navigate('/reservations');
   };
 
+  const goToAvailabilityForm = () => {
+    navigate('/availability');
+  };
+
+
   return (
     <header className="header">
       <button className="button" onClick={goToReservationForm}>Reservations</button>
       <button className="button" onClick={goToFacilitiesForm}>Facilities</button>
+      <button className="button" onClick={goToAvailabilityForm}>Availability</button>
       <button className="button logout-button" onClick={handleLogout}>Logout</button>
     </header>
   );
