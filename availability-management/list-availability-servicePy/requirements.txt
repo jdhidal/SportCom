@@ -2,3 +2,5 @@ Flask
 Flask-Swagger-UI
 pymysql
 pika
+flask-cors
+mysql-connector-python
