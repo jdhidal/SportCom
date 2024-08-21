@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: Availability Service API
+  version: 1.0.0
+  description: API for managing availability records.
+paths:
+  /availability:
+    get:
+      summary: Retrieve all availability records
+      responses:
+        '200':
+          description: A list of availability records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    date:
+                      type: string
+                      format: date-time
+                    status:
+                      type: string
+                      example: "available"
+        '500':
+          description: Internal server error

@@ -1,0 +1,4 @@
+Flask
+Flask-Swagger-UI
+pymysql
+pika
