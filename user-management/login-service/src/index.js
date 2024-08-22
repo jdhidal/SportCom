@@ -103,5 +103,4 @@ const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
   console.log(`Authentication service running on http://localhost:${port}`);
-  consumeMessages(); // Start listening to RabbitMQ messages if needed
 });

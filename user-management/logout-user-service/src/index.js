@@ -40,5 +40,4 @@ const port = process.env.PORT || 3002;
 
 app.listen(port, () => {
   console.log(`Logout service running on http://localhost:${port}`);
-  consumeMessages(); // Start listening to RabbitMQ messages
 });
