@@ -1,8 +1,19 @@
-// src/components/UserLogs/UserLogs.js
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GraphQLClient, gql } from 'graphql-request';
 import './UserLogs.css';
+
+const client = new GraphQLClient('http://localhost:3019/graphql');
+
+const GET_LOGS = gql`
+  query {
+    getLogs {
+      timestamp
+      queueName
+      messageContent
+    }
+  }
+`;
 
 const UserLogs = () => {
   const [logs, setLogs] = useState([]);
@@ -10,9 +21,8 @@ const UserLogs = () => {
 
   useEffect(() => {
     // Fetch user logs on component mount
-    fetch('http://localhost:3019/api/user-logs')
-      .then(response => response.json())
-      .then(data => setLogs(data))
+    client.request(GET_LOGS)
+      .then(data => setLogs(data.getLogs))
       .catch(error => console.error('Error fetching user logs:', error));
   }, []);
 
