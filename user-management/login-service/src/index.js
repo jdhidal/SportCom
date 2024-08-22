@@ -29,24 +29,6 @@ const dbConfig = {
   database: process.env.DB_DATABASE
 };
 
-// RabbitMQ configuration
-
-const consumeMessages = async () => {
-  try {
-    const conn = await amqp.connect(process.env.RABBITMQ_URL);
-    const channel = await conn.createChannel();
-    await channel.assertQueue('user-created');
-
-    channel.consume('user-created', (msg) => {
-      console.log('Received a message in user_created queue:', msg.content.toString());
-    });
-
-  } catch (err) {
-    console.error('Failed to connect to RabbitMQ:', err);
-  }
-};
-
-consumeMessages();
 
 // Login route
 app.post('/login', async (req, res) => {

@@ -29,24 +29,6 @@ app.use(cors({
 // Middleware to parse JSON bodies
 app.use(express.json()); // Para analizar cuerpos JSON
 
-// RabbitMQ consumer to listen for logout messages
-const consumeMessages = async () => {
-  try {
-    const conn = await amqp.connect(process.env.RABBITMQ_URL);
-    const channel = await conn.createChannel();
-    await channel.assertQueue('user-login');
-
-    channel.consume('user-login', (msg) => {
-      console.log('Received a message in user_created queue:', msg.content.toString());
-    });
-
-  } catch (err) {
-    console.error('Failed to connect to RabbitMQ:', err);
-  }
-};
-
-consumeMessages();
-
 // Logout route
 app.post('/logout', (req, res) => {
     // Borra la cookie 'token' sin necesidad de leer mensajes de RabbitMQ
