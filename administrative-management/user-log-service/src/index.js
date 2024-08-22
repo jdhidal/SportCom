@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const { graphqlHTTP } = require('express-graphql');
+const schema = require('./schema'); // Importar el esquema de GraphQL
 
 dotenv.config();
 
@@ -65,25 +67,13 @@ const consumeMessages = async () => {
 
 consumeMessages();
 
-// Nueva ruta para obtener los logs de usuarios
-app.get('/api/user-logs', (req, res) => {
-  fs.readFile(logFilePath, 'utf8', (err, data) => { // Ruta del archivo de log en el mismo nivel que 'src'
-    if (err) {
-      console.error('Failed to read log file:', err);
-      return res.status(500).json({ error: 'Failed to read log file' });
-    }
-
-    // Convertir el contenido del archivo en un array de entradas de log
-    const logs = data.trim().split('\n').map(log => {
-      const [timestamp, queueName, messageContent] = log.match(/\[(.*?)\]\s*:\s*(.*)/).slice(1);
-      return { timestamp, queueName, messageContent };
-    });
-
-    res.status(200).json(logs);
-  });
-});
+// Integrar GraphQL
+app.use('/graphql', graphqlHTTP({
+  schema,
+  graphiql: true, // Habilitar GraphiQL para pruebas
+}));
 
 const port = process.env.PORT || 3019;
 app.listen(port, () => {
-  console.log(`Service running on http://localhost:${port}`);
+  console.log(`Service running on http://localhost:${port}/graphql`);
 });
