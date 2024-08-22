@@ -67,11 +67,16 @@ const consumeMessages = async () => {
 
 consumeMessages();
 
+
+const { schema: graphqlSchema, root } = require('./schema'); // Renombrar 'schema' a 'graphqlSchema'
+
 // Integrar GraphQL
 app.use('/graphql', graphqlHTTP({
-  schema,
+  schema: graphqlSchema, // Usar el nuevo nombre
+  rootValue: root, // Pasar los resolvers correctamente
   graphiql: true, // Habilitar GraphiQL para pruebas
 }));
+
 
 const port = process.env.PORT || 3019;
 app.listen(port, () => {
