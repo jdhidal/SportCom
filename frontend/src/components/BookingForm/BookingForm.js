@@ -50,13 +50,26 @@ const ReservationForm = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:3010/reservations/${id}`)
+    fetch(`http://localhost:3010/reservations/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then(() => {
         setReservations(reservations.filter(reservation => reservation.id !== id));
       })
-      .catch(error => console.error('Error deleting reservation:', error));
+      .catch(error => {
+        console.error('Error deleting reservation:', error);
+      });
   };
-
+ 
   return (
     <div className="reservation-form">
       <h2>Reservations</h2>

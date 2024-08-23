@@ -1,0 +1,24 @@
+# Go build artifacts
+bin/
+pkg/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Dependency directories
+vendor/
+
+# Environment files
+.env
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.log

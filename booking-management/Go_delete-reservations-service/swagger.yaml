@@ -1,0 +1,36 @@
+openapi: 3.0.0
+info:
+  title: Delete Reservations Service
+  description: API para eliminar reservas en el sistema.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3010
+    description: Servidor de desarrollo local
+paths:
+  /reservations/{id}:
+    delete:
+      summary: Elimina una reserva
+      description: Elimina una reserva especificada por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la reserva que se desea eliminar
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Reserva eliminada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  affectedRows:
+                    type: integer
+                    example: 1
+        '404':
+          description: Reserva no encontrada
+        '500':
+          description: Error en el servidor
