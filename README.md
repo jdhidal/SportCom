@@ -2,28 +2,27 @@
 
 ## Members
 - **Diego Hidalgo**
-- **Kevin Guaña**
 
 ## Description
-SPORTCOM es una solución para la gestión de reservas en un complejo deportivo que ofrece diversas instalaciones como canchas de tenis, piscinas, gimnasios y campos de fútbol. Las reservas serán gestionadas por el personal. La gestión manual de estas reservas es ineficiente y propensa a errores, especialmente durante las horas pico.
+SPORTCOM is a solution for booking management in a sports complex that offers various facilities such as tennis courts, swimming pools, gyms and football pitches. Bookings will be managed by staff. Manual management of these bookings is inefficient and error-prone, especially during peak hours.
 
 ## Problem Statement
-La gestión manual de reservas en el complejo deportivo resulta ineficiente y propensa a errores, especialmente en momentos de alta demanda. Se necesita un sistema que automatice el proceso de reserva y envíe recordatorios a los huéspedes para mejorar la eficiencia y reducir los errores.
+Manual booking management at the sports complex is inefficient and error-prone, especially at times of high demand. A system that automates the booking process and sends reminders to guests is needed to improve efficiency and reduce errors.
 
 ## Features
-- **Reserva en Línea:** Los usuarios son quienes registrarán y tendran acceso administrativos del Sistema.
-- **Recordatorios Automáticos:** Se mantendrá recordatorios automáticos sobre las reservas.
-- **Gestión de Instalaciones:** Facilita la gestión y disponibilidad de las instalaciones.
-- **Interfaz Amigable:** Ofrece una interfaz intuitiva para usuarios y personal.
-- **Seguridad:** Protege la información de los usuarios y reservas con autenticación y autorización
-- **Reportes:** Genera logs de auditoria
+- **Online Booking:** Users are the ones who will register and have administrative access to the System.
+- **Automatic Reminders:** Automatic reminders will be maintained on reservations.
+- **Facility Management:** Facilitates facility management and availability.
+- **User-friendly interface:** Offers an intuitive interface for users and staff.
+- **Security:** Protect user and booking information with authentication and authorization
+- **Reports:** Generate audit logs
 
 
 ## Instruction
 
-Sigue estos pasos para obtener SportCom:
+Follow these steps to get SportCom:
 
-1. **Código Fuente:**
+1. **Source code:**
    ```bash
    https://github.com/tu-usuario/SPORTCOM.git
 
@@ -35,13 +34,16 @@ Sigue estos pasos para obtener SportCom:
    ## Login
 
    ![Login](images/Login.png)
+   _App login screen._
 
-   ## Crear
+   ## Create Users
 
-   ![Crear](images/Register.png)
+   ![Create](images/Register.png)
+   _Interface to create new users._
 
-   ## Interfaz Principal
+   ## Main Interface
 
-   ![Interfaz Principal](images/Main-Interface.png)
+   ![Main Interface](images/Main-Interface.png)
+   -Main view of the application.-
    
 
