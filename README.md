@@ -44,6 +44,13 @@ Follow these steps to get SportCom:
    ## Main Interface
 
    ![Main Interface](images/Main-Interface.png)
-   -Main view of the application.-
+   _Main view of the application._
    
-
+## Lenguajes
+- **Python, js, Go, Php**: Used for the backend of the application.
+- **React**: Used for the frontend of the application.
+- **MySQL**: Used for database management.
+- **Docker**: Used for containerization.
+- **Heroku**: Used for cloud hosting.
+- **Rabbit**: Used for cloud event Driver.
+- **HTML/CSS**: Used for the user interface.
