@@ -31,7 +31,7 @@ const CreateUserForm = () => {
 
   return (
     <div className="form-wrapper">
-      <h2>Registrarse</h2>
+      <h2>Register</h2>
       <form id="formRegister" onSubmit={handleSubmit}>
         <div className="form-control">
           <input
@@ -42,7 +42,7 @@ const CreateUserForm = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <label>Ingrese su nombre</label>
+          <label>Enter your name</label>
         </div>
 
         <div className="form-control">
@@ -54,7 +54,7 @@ const CreateUserForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label>Ingrese su correo electrónico</label>
+          <label>Enter your Email</label>
         </div>
 
         <div className="form-control">
@@ -66,10 +66,10 @@ const CreateUserForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <label>Ingrese su contraseña</label>
+          <label>Enter your new Password</label>
         </div>
-        <button type="submit">Registrarse</button>
-        <button onClick={() => navigate('/')}>Cancelar</button> {/* Redirige al formulario de login */}
+        <button type="submit">Register</button>
+        <button onClick={() => navigate('/')}>Cancel</button> {/* Redirige al formulario de login */}
       </form>
       {message && <p>{message}</p>}
     </div>
