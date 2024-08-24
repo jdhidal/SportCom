@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: API para Gestión de Instalaciones
+  description: API para crear y gestionar instalaciones.
+  version: "1.0.0"
+  contact:
+    email: contacto@tudominio.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:3004
+    description: Servidor local
+
+paths:
+  /facilities:
+    post:
+      tags:
+        - Facilities
+      summary: Crear una nueva instalación
+      description: Este endpoint permite crear una nueva instalación en la base de datos.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Gimnasio
+                descripcion:
+                  type: string
+                  example: Un gimnasio bien equipado
+                tutor:
+                  type: string
+                  example: Juan Pérez
+      responses:
+        201:
+          description: Instalación creada con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Gimnasio
+                  descripcion:
+                    type: string
+                    example: Un gimnasio bien equipado
+                  tutor:
+                    type: string
+                    example: Juan Pérez
+        500:
+          description: Error al crear la instalación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Error de conexión a la base de datos
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Facility:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        descripcion:
+          type: string
+        tutor:
+          type: string

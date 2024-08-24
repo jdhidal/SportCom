@@ -1,0 +1,31 @@
+{
+    "name": "myvendor/php-create-facilities-service",
+    "description": "A PHP project with RabbitMQ, MySQL, and Swagger",
+    "type": "project",
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "vlucas/phpdotenv": "^5.4",
+        "php-amqplib/php-amqplib": "^3.1",
+        "ext-pdo": "*",
+        "ext-mysqli": "*",
+        "swagger-api/swagger-ui": "^4.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "echo 'Installation complete!'"
+        ],
+        "post-update-cmd": [
+            "echo 'Update complete!'"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "stable"
+}

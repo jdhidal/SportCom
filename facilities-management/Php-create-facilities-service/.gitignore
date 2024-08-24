@@ -1,0 +1,26 @@
+# Composer
+/vendor/
+
+# PHPStorm
+.idea/
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Composer lock file
+composer.lock
+
+# Temporary files
+*.tmp
+*.swp
+
+# PHPUnit
+phpunit.xml
+phpunit.xml.dist
