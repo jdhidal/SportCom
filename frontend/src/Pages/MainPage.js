@@ -19,7 +19,7 @@ const MainPage = () => {
   useEffect(() => {
     const token = Cookies.get('token');
 
-    const socket = io('http://localhost:3003', {
+    const socket = io('https://microservice-websocket-30e27c571914.herokuapp.com', {
       query: { token }
     });
 

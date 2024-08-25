@@ -46,7 +46,7 @@ jobs:
             ["user-management/create-user-service"]="microservice-create-users"
             ["user-management/login-service"]="microservice-login"
             ["user-management/logout-user-service"]="microservice-logout"
-            ["user-management/wobsocket-service"]="app-name-base4"
+            ["user-management/wobsocket-service"]="microservice-websocket"
             ["frontend"]="app-name-frontend"
           )
 
