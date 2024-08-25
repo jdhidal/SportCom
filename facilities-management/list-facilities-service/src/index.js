@@ -48,34 +48,6 @@ app.get('/facilities', async (req, res) => {
   }
 });
 
-// RabbitMQ consumer
-const consumeMessages = async () => {
-  try {
-    const conn = await amqp.connect(process.env.RABBITMQ_URL);
-    const channel = await conn.createChannel();
-    await channel.assertQueue('facility_created');
-    await channel.assertQueue('facility_updated');
-    await channel.assertQueue('facility_deleted');
-
-    channel.consume('facility_created', (msg) => {
-      console.log('Received a message in facility_created queue:', msg.content.toString());
-    });
-
-    channel.consume('facility_updated', (msg) => {
-      console.log('Received a message in facility_updated queue:', msg.content.toString());
-    });
-
-    channel.consume('facility_deleted', (msg) => {
-      console.log('Received a message in facility_deleted queue:', msg.content.toString());
-    });
-
-  } catch (err) {
-    console.error('Failed to connect to RabbitMQ:', err);
-  }
-};
-
-consumeMessages();
-
 const port = process.env.PORT || 3007;
 
 app.listen(port, () => {

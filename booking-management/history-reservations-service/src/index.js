@@ -48,34 +48,6 @@ app.get('/reservations', async (req, res) => {
   }
 });
 
-// RabbitMQ consumer
-const consumeMessages = async () => {
-  try {
-    const conn = await amqp.connect(process.env.RABBITMQ_URL);
-    const channel = await conn.createChannel();
-    await channel.assertQueue('reservation_created');
-    await channel.assertQueue('reservation_deleted');
-    await channel.assertQueue('reservation_canceled');
-
-    channel.consume('reservation_created', (msg) => {
-      console.log('Received a message in reservation_created queue:', msg.content.toString());
-    });
-
-    channel.consume('reservation_canceled', (msg) => {
-      console.log('Received a message in reservation_canceled queue:', msg.content.toString());
-    });
-
-    channel.consume('reservation_deleted', (msg) => {
-      console.log('Received a message in reservation_deleted queue:', msg.content.toString());
-    });
-
-  } catch (err) {
-    console.error('Failed to connect to RabbitMQ:', err);
-  }
-};
-
-consumeMessages();
-
 const port = process.env.PORT || 3011;
 
 app.listen(port, () => {

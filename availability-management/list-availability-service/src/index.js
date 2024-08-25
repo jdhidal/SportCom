@@ -55,38 +55,6 @@ app.get('/availability', async (req, res) => {
   }
 });
 
-// RabbitMQ consumer
-const consumeMessages = async () => {
-  try {
-    const conn = await amqp.connect(process.env.RABBITMQ_URL);
-    const channel = await conn.createChannel();
-    await channel.assertQueue('availability_created');
-    await channel.assertQueue('availability_deleted');
-    await channel.assertQueue('availability_updated');
-
-    channel.consume('availability_created', (msg) => {
-      console.log('Received a message in availability_created queue:', msg.content.toString());
-      // Process the message here
-    });
-
-    channel.consume('availability_deleted', (msg) => {
-      console.log('Received a message in availability_deleted queue:', msg.content.toString());
-      // Process the message here
-    });
-
-    channel.consume('availability_updated', (msg) => {
-      console.log('Received a message in availability_updated queue:', msg.content.toString());
-      // Process the message here
-    });
-
-  } catch (err) {
-    console.error('Failed to connect to RabbitMQ:', err);
-  }
-};
-
-// Start RabbitMQ consumer
-consumeMessages();
-
 const port = process.env.PORT || 3015;
 // Start the server
 app.listen(port, () => {
