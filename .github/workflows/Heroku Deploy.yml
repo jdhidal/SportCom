@@ -39,7 +39,7 @@ jobs:
             ["booking-management/cancel-reservations-service"]="app-name-base4"
             ["booking-management/Go_delete-reservations-service"]="app-name-base4"
             ["booking-management/history-reservations-service"]="app-name-base4"
-            ["facilities-management/create-facilities-service"]="app-name-base4"
+            ["facilities-management/create-facilities-service"]="microservice-create-facilities"
             ["facilities-management/delete-facilities-service"]="app-name-base4"
             ["facilities-management/update-facilities-service"]="app-name-base4"
             ["facilities-management/list-facilities-service"]="app-name-base4"

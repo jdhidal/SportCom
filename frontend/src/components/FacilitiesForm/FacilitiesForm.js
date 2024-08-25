@@ -18,7 +18,7 @@ const FacilitiesForm = () => {
 
   const handleCreate = () => {
     if (newFacility.name && newFacility.descripcion && newFacility.tutor) {
-      axios.post('http://localhost:3004/facilities', newFacility)
+      axios.post('https://microservice-create-facilities-82827df0965c.herokuapp.com/facilities', newFacility)
         .then(response => {
           setFacilities([...facilities, response.data]);
           setNewFacility({ name: '', descripcion: '', tutor: '' });
