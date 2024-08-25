@@ -10,7 +10,7 @@ const ReservationLogs = () => {
 
   useEffect(() => {
     // Fetch reservation logs on component mount
-    fetch('http://localhost:3018/api/reservation-logs')
+    fetch('https://microservice-reserv-logs-47e965b4c9cf.herokuapp.com/api/reservation-logs')
       .then(response => response.json())
       .then(data => setLogs(data))
       .catch(error => console.error('Error fetching reservation logs:', error));

@@ -29,7 +29,7 @@ jobs:
           services=(
             ["administrative-management/availability-log-service"]="microservice-avail-logs"
             ["administrative-management/user-log-service"]="microservice-facilities-logs"
-            ["administrative-management/reservation-log-service"]="app-name-service3"
+            ["administrative-management/reservation-log-service"]="microservice-reserv-logs"
             ["administrative-management/facilities-log-service"]="app-name-service4"
             ["availability-management/create-availability-service"]="microservice-create-avail"
             ["availability-management/delete-availability-service"]="microservice-delete-avail"
