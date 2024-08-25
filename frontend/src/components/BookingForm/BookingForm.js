@@ -10,7 +10,7 @@ const ReservationForm = () => {
 
   useEffect(() => {
     // Fetch reservations on component mount
-    axios.get('http://localhost:3011/reservations')
+    axios.get('https://microservice-list-reservation-9e286342001c.herokuapp.com/reservations')
       .then(response => setReservations(response.data))
       .catch(error => console.error('Error fetching reservations:', error));
   }, []);
