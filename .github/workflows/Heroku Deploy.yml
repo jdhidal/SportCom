@@ -27,10 +27,10 @@ jobs:
           # Lista de servicios y apps
           declare -A services
           services=(
-            ["administrative-management/availability-logs-service"]="app-name-service1"
-            ["administrative-management/user-logs-service"]="app-name-service2"
-            ["administrative-management/reservation-logs-service"]="app-name-service3"
-            ["administrative-management/facilities-logs-service"]="app-name-service4"
+            ["administrative-management/availability-log-service"]="app-name-service1"
+            ["administrative-management/user-log-service"]="app-name-service2"
+            ["administrative-management/reservation-log-service"]="app-name-service3"
+            ["administrative-management/facilities-log-service"]="app-name-service4"
             ["availability-management/create-availability-service"]="app-name-base1"
             ["availability-management/delete-availability-service"]="app-name-base2"
             ["availability-management/update-availability-service"]="app-name-base3"
