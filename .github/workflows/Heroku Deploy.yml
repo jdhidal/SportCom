@@ -44,7 +44,7 @@ jobs:
             ["facilities-management/update-facilities-service"]="app-name-base4"
             ["facilities-management/list-facilities-service"]="app-name-base4"
             ["user-management/create-user-service"]="app-name-base4"
-            ["user-management/login-service"]="app-name-base4"
+            ["user-management/login-service"]="microservice-login"
             ["user-management/logout-user-service"]="app-name-base4"
             ["user-management/wobsocket-service"]="app-name-base4"
             ["frontend"]="app-name-frontend"
