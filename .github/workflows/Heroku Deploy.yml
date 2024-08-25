@@ -50,18 +50,32 @@ jobs:
             ["frontend"]="app-name-frontend"
           )
 
+          # Cambiar al directorio base
+          cd "$BASE_DIR"
+
+          # Iterar sobre los servicios para verificar cambios y desplegar
           for dir in "${!services[@]}"; do
-            cd "$BASE_DIR/$dir"
-            if [ $(git diff --name-only HEAD~1 | grep -e '^path/to/$dir/' | wc -l) -gt 0 ]; then
-              echo "Changes detected in $dir, deploying to Heroku app ${services[$dir]}"
-              git remote add heroku https://git.heroku.com/${services[$dir]}.git
-              git push heroku master
-              heroku ps --app ${services[$dir]}
-              heroku logs --tail --app ${services[$dir]}
+            echo "Checking directory $dir"
+            if [ -d "$dir" ]; then
+              cd "$dir" || exit 1
+              echo "Current directory: $(pwd)"
+              
+              # Verificar si hay cambios en el directorio
+              if [ $(git diff --name-only HEAD~1 | grep -e "^$dir" | wc -l) -gt 0 ]; then
+                echo "Changes detected in $dir, deploying to Heroku app ${services[$dir]}"
+                git remote add heroku https://git.heroku.com/${services[$dir]}.git
+                git push heroku master
+                heroku ps --app ${services[$dir]}
+                heroku logs --tail --app ${services[$dir]}
+              else
+                echo "No changes detected in $dir"
+              fi
+
+              # Volver al directorio base
+              cd "$BASE_DIR" || exit 1
             else
-              echo "No changes detected in $dir"
+              echo "Directory $dir does not exist"
             fi
-            cd "$BASE_DIR"
           done
         env:
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
