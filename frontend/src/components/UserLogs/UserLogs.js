@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { GraphQLClient, gql } from 'graphql-request';
 import './UserLogs.css';
 
-const client = new GraphQLClient('http://localhost:3019/graphql');
+const client = new GraphQLClient('https://microservice-user-logs-fef7fff92cba.herokuapp.com/graphql');
 
 const GET_LOGS = gql`
   query {

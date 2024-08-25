@@ -28,9 +28,9 @@ jobs:
           declare -A services
           services=(
             ["administrative-management/availability-log-service"]="microservice-avail-logs"
-            ["administrative-management/user-log-service"]="microservice-facilities-logs"
+            ["administrative-management/user-log-service"]="microservice-user-logs"
             ["administrative-management/reservation-log-service"]="microservice-reserv-logs"
-            ["administrative-management/facilities-log-service"]="app-name-service4"
+            ["administrative-management/facilities-log-service"]="microservice-facilities-logs"
             ["availability-management/create-availability-service"]="microservice-create-avail"
             ["availability-management/delete-availability-service"]="microservice-delete-avail"
             ["availability-management/update-availability-service"]="microservice-update-avail"
