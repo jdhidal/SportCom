@@ -9,8 +9,7 @@ const ProtectedRoute = ({ element }) => {
   };
 
   const token = getCookie('token');
-  console.log('Token:', token); // Verifica el token en la consola
-
+  console.log('Token:', token); // Verify token in Aplication Web
   return token ? element : <Navigate to="/" />;
 };
 

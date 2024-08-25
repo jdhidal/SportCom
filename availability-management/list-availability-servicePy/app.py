@@ -7,19 +7,19 @@ from flask_cors import CORS
 import signal
 import sys
 
-# Cargar variables de entorno desde el archivo .env
+# Update files .env
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Habilitar CORS
+CORS(app)  
 
-# Configuración global para permitir el cierre del hilo
+# Configuration global close
 should_stop = False
 
 @app.route('/availability', methods=['GET'])
 def get_availability():
     try:
-        # Conectar a la base de datos MySQL
+        
         connection = mysql.connector.connect(
             host=os.getenv('DB_HOST'),
             user=os.getenv('DB_USER'),
@@ -44,12 +44,12 @@ def consume_messages():
         return
 
     try:
-        # Configuración de conexión
+        
         parameters = pika.URLParameters(rabbitmq_url)
         connection = pika.BlockingConnection(parameters)
         channel = connection.channel()
 
-        # Asegurar que las colas existan
+        
         channel.queue_declare(queue='availability_created', durable=True)
         channel.queue_declare(queue='availability_deleted', durable=True)
         channel.queue_declare(queue='availability_updated', durable=True)
@@ -57,13 +57,13 @@ def consume_messages():
         def callback(ch, method, properties, body):
             print(f"Received a message in {method.routing_key} queue: {body.decode()}")
 
-        # Consumir mensajes de la cola 'availability_created'
+        
         channel.basic_consume(queue='availability_created', on_message_callback=callback, auto_ack=False)
 
-        # Consumir mensajes de la cola 'availability_deleted'
+        
         channel.basic_consume(queue='availability_deleted', on_message_callback=callback, auto_ack=False)
 
-        # Consumir mensajes de la cola 'availability_updated'
+        
         channel.basic_consume(queue='availability_updated', on_message_callback=callback, auto_ack=False)
 
         print('Waiting for messages. To exit press CTRL+C')

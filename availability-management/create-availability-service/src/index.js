@@ -15,7 +15,7 @@ const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
-app.use(cors()); // Enable CORS
+app.use(cors()); 
 
 const dbConfig = {
   host: process.env.DB_HOST,

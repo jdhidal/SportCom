@@ -41,7 +41,7 @@ app.post('/login', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
 
-    // Verifica si el usuario existe
+    
     const [result] = await connection.execute(
       'CALL AuthenticateUser(?)', 
       [email]
@@ -51,7 +51,7 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Obtén la contraseña almacenada para el usuario
+    
     const [userResult] = await connection.execute(
       'SELECT password FROM users WHERE email = ?',
       [email]
@@ -63,7 +63,7 @@ app.post('/login', async (req, res) => {
 
     const storedPassword = userResult[0].password;
 
-    // Compara la contraseña proporcionada con la almacenada
+    
     const match = await bcrypt.compare(password, storedPassword);
 
     if (match) {
@@ -77,14 +77,14 @@ app.post('/login', async (req, res) => {
       });
       res.json({ message: 'Logged in successfully' });
    
-      // Conecta a RabbitMQ y envía el mensaje a la cola de login
+      
       const conn = await amqp.connect(process.env.RABBITMQ_URL);
       const channel = await conn.createChannel();
       await channel.assertQueue('user-login');
       channel.sendToQueue('user-login', Buffer.from(JSON.stringify({email, token})));
       console.log('Message sent to RabbitMQ');
     
-      // Close RabbitMQ connection
+      
       await channel.close();
       await conn.close();
 

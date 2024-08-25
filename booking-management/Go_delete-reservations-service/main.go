@@ -33,14 +33,14 @@ func main() {
 
 	// Configura el middleware CORS
 	corsHandler := cors.New(cors.Options{
-		AllowedOrigins: []string{"http://localhost:3021"}, // Reemplaza con tu origen
+		AllowedOrigins: []string{"http://localhost:3021"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Content-Type", "Authorization"},
 	})
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3010" // Puerto por defecto si no se especifica
+		port = "3010" // Port defect asing
 	}
 
 	log.Printf("Service running on http://localhost:%s", port)
@@ -61,7 +61,6 @@ func deleteReservationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	// Ejecutar procedimiento almacenado
 	_, err = db.Exec("CALL DeleteReservation(?)", reservationId)
 	if err != nil {
 		log.Printf("Failed to execute stored procedure: %v", err)
@@ -69,7 +68,6 @@ func deleteReservationHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Enviar mensaje a RabbitMQ
 	err = sendMessageToRabbitMQ(reservationId)
 	if err != nil {
 		log.Printf("Failed to send message to RabbitMQ: %v", err)
@@ -95,7 +93,7 @@ func connectToDatabase() (*sql.DB, error) {
 		return nil, err
 	}
 
-	// Verifica la conexión
+	// Verify conection
 	err = db.Ping()
 	if err != nil {
 		log.Printf("Error pinging database: %v", err)

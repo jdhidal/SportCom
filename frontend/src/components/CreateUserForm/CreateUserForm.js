@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import './CreateUserForm.css';
 
 const CreateUserForm = () => {
@@ -10,7 +10,7 @@ const CreateUserForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Usa useNavigate para redireccionar
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ const CreateUserForm = () => {
         password
       });
       setMessage(response.data.message);
-      navigate('/'); // Redirige al formulario de login
+      navigate('/'); 
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage('Error creating user');
@@ -69,7 +69,7 @@ const CreateUserForm = () => {
           <label>Enter your new Password</label>
         </div>
         <button type="submit">Register</button>
-        <button onClick={() => navigate('/')}>Cancel</button> {/* Redirige al formulario de login */}
+        <button onClick={() => navigate('/')}>Cancel</button> {/* Redirect Login*/}
       </form>
       {message && <p>{message}</p>}
     </div>

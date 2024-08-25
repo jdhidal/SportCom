@@ -17,7 +17,7 @@ const LoginForm = () => {
       const response = await axios.post('http://localhost:3001/login', {
         email,
         password
-      }, { withCredentials: true }); // Asegúrate de incluir withCredentials aquí
+      }, { withCredentials: true }); // Credential
 
       setMessage('Login successful!');
       Cookies.set('token', response.data.token, { expires: 1, secure: false, sameSite: 'Lax' });
