@@ -14,7 +14,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/login', {
+      const response = await axios.post('https://microservice-login-b1831f0a3737.herokuapp.com/login', {
         email,
         password
       }, { withCredentials: true }); // Credential
@@ -24,7 +24,7 @@ const LoginForm = () => {
       navigate('/main'); // Main view
     } catch (error) {
       console.error('Error during login:', error);
-      setMessage('Contraseña o usuario incorrecto. Ingrese de nuevo');
+      setMessage('Password or users incorrect. Please log in again');
     }
   };
 
