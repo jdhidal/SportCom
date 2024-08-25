@@ -25,13 +25,13 @@ func init() {
 func main() {
 	router := mux.NewRouter()
 
-	// Servir el archivo Swagger YAML
+	// Service to file Swagger YAML
 	router.PathPrefix("/api-docs/").Handler(http.StripPrefix("/api-docs/", http.FileServer(http.Dir("./"))))
 
-	// Endpoint para eliminar una reservación
+	// Endpoint delete
 	router.HandleFunc("/reservations/{id}", deleteReservationHandler).Methods("DELETE")
 
-	// Configura el middleware CORS
+	// Configure CORS
 	corsHandler := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:3021"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
