@@ -32,7 +32,7 @@ const FacilitiesForm = () => {
 
   const handleUpdate = () => {
     if (updateFacility.name && updateFacility.descripcion && updateFacility.tutor) {
-      axios.put(`http://localhost:3005/facilities/${updateFacility.id}`, updateFacility)
+      axios.put(`https://microservice-update-facilities-fa3110d63e25.herokuapp.com/facilities/${updateFacility.id}`, updateFacility)
         .then(response => {
           setFacilities(facilities.map(facility => 
             facility.id === updateFacility.id ? response.data : facility
