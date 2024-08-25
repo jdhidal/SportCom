@@ -1,0 +1,55 @@
+name: Heroku Deploy
+
+on:
+  push:
+    branches:
+      - master  # Cambia esto por el nombre de tu rama principal si es diferente
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+          heroku --version
+
+      - name: Detect Changes and Deploy
+        run: |
+          # Definir el directorio base
+          BASE_DIR="."
+
+          # Lista de servicios y apps
+          declare -A services
+          services=(
+            ["administrative-management/service1"]="app-name-service1"
+            ["administrative-management/service2"]="app-name-service2"
+            ["administrative-management/service3"]="app-name-service3"
+            ["administrative-management/service4"]="app-name-service4"
+            ["base/service1"]="app-name-base1"
+            ["base/service2"]="app-name-base2"
+            ["base/service3"]="app-name-base3"
+            ["base/service4"]="app-name-base4"
+            ["frontend"]="app-name-frontend"
+          )
+
+          for dir in "${!services[@]}"; do
+            cd "$BASE_DIR/$dir"
+            if [ $(git diff --name-only HEAD~1 | grep -e '^path/to/$dir/' | wc -l) -gt 0 ]; then
+              echo "Changes detected in $dir, deploying to Heroku app ${services[$dir]}"
+              git remote add heroku https://git.heroku.com/${services[$dir]}.git
+              git push heroku master
+              heroku ps --app ${services[$dir]}
+              heroku logs --tail --app ${services[$dir]}
+            else
+              echo "No changes detected in $dir"
+            fi
+            cd "$BASE_DIR"
+          done
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
