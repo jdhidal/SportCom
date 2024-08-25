@@ -16,7 +16,7 @@ const CreateUserForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/create', {
+      const response = await axios.post('https://microservice-create-users-2d9e27229aa6.herokuapp.com/create', {
         name,
         email,
         password
