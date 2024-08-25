@@ -40,7 +40,7 @@ const ReservationForm = () => {
   };
 
   const handleCancel = (id) => {
-    axios.put(`http://localhost:3009/reservations/${id}`)
+    axios.put(`https://microservice-canc-reservation-ee059cd96c68.herokuapp.com/reservations/${id}`)
       .then(() => {
         setReservations(reservations.map(reservation =>
           reservation.id === id ? { ...reservation, status: 'canceled' } : reservation
