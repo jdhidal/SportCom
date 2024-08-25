@@ -34,7 +34,7 @@ const AvailabilityForm = () => {
 
   const handleUpdate = () => {
     if (updateAvailability.start_date && updateAvailability.end_date && updateAvailability.spots && updateAvailability.cost) {
-      axios.put(`http://localhost:3013/availability/${updateAvailability.id}`, updateAvailability)
+      axios.put(`https://microservice-update-avail-09ae5ce9defb.herokuapp.com/availability/${updateAvailability.id}`, updateAvailability)
         .then(response => {
           setAvailabilities(availabilities.map(availability => 
             availability.id === updateAvailability.id ? response.data : availability
