@@ -10,30 +10,28 @@ const path = require('path');
 dotenv.config();
 
 const app = express();
-
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
-app.use(cors());  // Enable CORS
+app.use(cors());
 
-const dbConfig = {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
+// Database connection function
+const connectToDatabase = async () => {
+    return mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE
+    });
 };
 
-// Connect to the database
-const connectToDatabase = async () => {
-    try {
-        const connection = await mysql.createConnection(dbConfig);
-        console.log('Connected to MySQL');
-        return connection;
-    } catch (err) {
-        console.error('Database connection failed:', err);
-        throw err;
-    }
+// RabbitMQ connection function
+const connectToRabbitMQ = async () => {
+    const conn = await amqp.connect(process.env.RABBITMQ_URL);
+    const channel = await conn.createChannel();
+    await channel.assertQueue('facility_deleted');
+    return { conn, channel };
 };
 
 // Endpoint to delete a facility
@@ -42,35 +40,26 @@ app.delete('/facilities/:id', async (req, res) => {
 
     try {
         const connection = await connectToDatabase();
-
-        // Execute stored procedure
         const [result] = await connection.execute('CALL DeleteFacility(?)', [id]);
-        console.log('Delete result:', result);
+        await connection.end(); // Close MySQL connection
 
         if (result[0][0].RowsAffected === 0) {
             return res.status(404).json({ message: 'Facility not found' });
         }
 
-        // Send message to RabbitMQ
-        const conn = await amqp.connect(process.env.RABBITMQ_URL);
-        const channel = await conn.createChannel();
-        await channel.assertQueue('facility_deleted');
+        const { conn, channel } = await connectToRabbitMQ();
         channel.sendToQueue('facility_deleted', Buffer.from(JSON.stringify({ id })));
-        console.log('Message sent to RabbitMQ');
-
-        // Close RabbitMQ connection
         await channel.close();
         await conn.close();
 
         res.status(200).json({ id });
-        await connection.end(); // Close MySQL connection
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error('Error processing request:', err);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 
 const port = process.env.PORT || 3006;
-
 app.listen(port, () => {
     console.log(`Service running on http://localhost:${port}`);
 });
