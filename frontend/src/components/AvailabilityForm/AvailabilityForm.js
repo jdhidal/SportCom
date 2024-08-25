@@ -20,7 +20,7 @@ const AvailabilityForm = () => {
 
   const handleCreate = () => {
     if (newAvailability.start_date && newAvailability.end_date && newAvailability.spots && newAvailability.cost) {
-      axios.post('http://localhost:3012/availability', newAvailability)
+      axios.post('https://microservice-create-avail-6edcf79721ad.herokuapp.com/availability', newAvailability)
         .then(response => {
           setAvailabilities([...availabilities, response.data]);
           setNewAvailability({ start_date: '', end_date: '', spots: '', cost: '' });

@@ -31,7 +31,7 @@ jobs:
             ["administrative-management/user-log-service"]="app-name-service2"
             ["administrative-management/reservation-log-service"]="app-name-service3"
             ["administrative-management/facilities-log-service"]="app-name-service4"
-            ["availability-management/create-availability-service"]="app-name-base1"
+            ["availability-management/create-availability-service"]="microservice-create-avail"
             ["availability-management/delete-availability-service"]="app-name-base2"
             ["availability-management/update-availability-service"]="app-name-base3"
             ["availability-management/list-availability-servicePy"]="app-name-base4"
