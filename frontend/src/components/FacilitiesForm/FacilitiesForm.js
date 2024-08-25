@@ -47,7 +47,7 @@ const FacilitiesForm = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:3006/facilities/${id}`)
+    axios.delete(`https://microservice-delete-facilities-dd35a96e4f17.herokuapp.com/facilities/${id}`)
       .then(() => {
         setFacilities(facilities.filter(facility => facility.id !== id));
       })

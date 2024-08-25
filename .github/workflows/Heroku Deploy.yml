@@ -40,7 +40,7 @@ jobs:
             ["booking-management/Go_delete-reservations-service"]="app-name-base4"
             ["booking-management/history-reservations-service"]="app-name-base4"
             ["facilities-management/create-facilities-service"]="microservice-create-facilities"
-            ["facilities-management/delete-facilities-service"]="app-name-base4"
+            ["facilities-management/delete-facilities-service"]="microservice-delete-facilities"
             ["facilities-management/update-facilities-service"]="app-name-base4"
             ["facilities-management/list-facilities-service"]="microservice-list-facilities"
             ["user-management/create-user-service"]="microservice-create-users"
