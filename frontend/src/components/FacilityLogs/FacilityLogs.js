@@ -10,7 +10,7 @@ const FacilityLogs = () => {
 
   useEffect(() => {
     // Fetch facility logs on component mount
-    fetch('http://localhost:3017/api/facility-logs')
+    fetch('https://microservice-facilities-logs-b8c33797401c.herokuapp.com/api/facility-logs')
       .then(response => response.json())
       .then(data => setLogs(data))
       .catch(error => console.error('Error fetching facility logs:', error));
