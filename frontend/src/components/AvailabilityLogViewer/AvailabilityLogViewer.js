@@ -9,7 +9,7 @@ const AvailabilityLogViewer = () => {
 
     useEffect(() => {
         // Fetch logs on component mount
-        axios.get('http://localhost:3016/api/availability-logs')
+        axios.get('https://microservice-avail-logs-326615635c36.herokuapp.com/api/availability-logs')
             .then(response => setLogs(response.data))
             .catch(error => console.error('Error fetching logs:', error));
     }, []);

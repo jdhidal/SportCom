@@ -27,7 +27,7 @@ jobs:
           # Lista de servicios y apps
           declare -A services
           services=(
-            ["administrative-management/availability-log-service"]="app-name-service1"
+            ["administrative-management/availability-log-service"]="microservice-avail-logs"
             ["administrative-management/user-log-service"]="app-name-service2"
             ["administrative-management/reservation-log-service"]="app-name-service3"
             ["administrative-management/facilities-log-service"]="app-name-service4"
