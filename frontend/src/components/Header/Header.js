@@ -8,7 +8,7 @@ const Header = ({ onLogout }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    fetch('http://localhost:3002/logout', {
+    fetch('https://microservice-logout-55d935a07e7b.herokuapp.com/logout', {
       method: 'POST',
       credentials: 'include'
     })
