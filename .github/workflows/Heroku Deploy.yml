@@ -35,10 +35,10 @@ jobs:
             ["availability-management/delete-availability-service"]="app-name-base2"
             ["availability-management/update-availability-service"]="app-name-base3"
             ["availability-management/list-availability-servicePy"]="app-name-base4"
-            ["booking-management/create-reservation-service"]="app-name-base4"
-            ["booking-management/cancel-reservation-service"]="app-name-base4"
-            ["booking-management/Go_delete-reservation-service"]="app-name-base4"
-            ["booking-management/history-reservation-service"]="app-name-base4"
+            ["booking-management/create-reservations-service"]="app-name-base4"
+            ["booking-management/cancel-reservations-service"]="app-name-base4"
+            ["booking-management/Go_delete-reservations-service"]="app-name-base4"
+            ["booking-management/history-reservations-service"]="app-name-base4"
             ["facilities-management/create-facilities-service"]="app-name-base4"
             ["facilities-management/delete-facilities-service"]="app-name-base4"
             ["facilities-management/update-facilities-service"]="app-name-base4"
@@ -46,7 +46,7 @@ jobs:
             ["user-management/create-user-service"]="app-name-base4"
             ["user-management/login-service"]="app-name-base4"
             ["user-management/logout-user-service"]="app-name-base4"
-            ["user-management/websocket-service"]="app-name-base4"
+            ["user-management/wobsocket-service"]="app-name-base4"
             ["frontend"]="app-name-frontend"
           )
 
