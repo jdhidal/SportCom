@@ -50,7 +50,7 @@ const ReservationForm = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:3010/reservations/${id}`, {
+    fetch(`https://microservice-delet-reservation-d1494fc07e7b.herokuapp.com/reservations/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
