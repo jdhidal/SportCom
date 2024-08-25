@@ -3,7 +3,7 @@ name: Heroku Deploy
 on:
   push:
     branches:
-      - master  # Cambia esto por el nombre de tu rama principal si es diferente
+      - master
 
 jobs:
   deploy:
@@ -27,14 +27,26 @@ jobs:
           # Lista de servicios y apps
           declare -A services
           services=(
-            ["administrative-management/service1"]="app-name-service1"
-            ["administrative-management/service2"]="app-name-service2"
-            ["administrative-management/service3"]="app-name-service3"
-            ["administrative-management/service4"]="app-name-service4"
-            ["base/service1"]="app-name-base1"
-            ["base/service2"]="app-name-base2"
-            ["base/service3"]="app-name-base3"
-            ["base/service4"]="app-name-base4"
+            ["administrative-management/availability-logs-service"]="app-name-service1"
+            ["administrative-management/user-logs-service"]="app-name-service2"
+            ["administrative-management/reservation-logs-service"]="app-name-service3"
+            ["administrative-management/facilities-logs-service"]="app-name-service4"
+            ["availability-management/create-availability-service"]="app-name-base1"
+            ["availability-management/delete-availability-service"]="app-name-base2"
+            ["availability-management/update-availability-service"]="app-name-base3"
+            ["availability-management/list-availability-servicePy"]="app-name-base4"
+            ["booking-management/create-reservation-service"]="app-name-base4"
+            ["booking-management/cancel-reservation-service"]="app-name-base4"
+            ["booking-management/Go_delete-reservation-service"]="app-name-base4"
+            ["booking-management/history-reservation-service"]="app-name-base4"
+            ["facilities-management/create-facilities-service"]="app-name-base4"
+            ["facilities-management/delete-facilities-service"]="app-name-base4"
+            ["facilities-management/update-facilities-service"]="app-name-base4"
+            ["facilities-management/list-facilities-service"]="app-name-base4"
+            ["user-management/create-user-service"]="app-name-base4"
+            ["user-management/login-service"]="app-name-base4"
+            ["user-management/logout-user-service"]="app-name-base4"
+            ["user-management/websocket-service"]="app-name-base4"
             ["frontend"]="app-name-frontend"
           )
 
@@ -52,4 +64,4 @@ jobs:
             cd "$BASE_DIR"
           done
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
