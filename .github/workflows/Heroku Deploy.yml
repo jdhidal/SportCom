@@ -32,7 +32,7 @@ jobs:
             ["administrative-management/reservation-log-service"]="app-name-service3"
             ["administrative-management/facilities-log-service"]="app-name-service4"
             ["availability-management/create-availability-service"]="microservice-create-avail"
-            ["availability-management/delete-availability-service"]="app-name-base2"
+            ["availability-management/delete-availability-service"]="microservice-delete-avail"
             ["availability-management/update-availability-service"]="app-name-base3"
             ["availability-management/list-availability-servicePy"]="app-name-base4"
             ["booking-management/create-reservations-service"]="microservice-creat-reservation"

@@ -49,7 +49,7 @@ const AvailabilityForm = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:3014/availability/${id}`)
+    axios.delete(`https://microservice-delete-avail-a8239ac814a9.herokuapp.com/availability/${id}`)
       .then(() => {
         setAvailabilities(availabilities.filter(availability => availability.id !== id));
       })
