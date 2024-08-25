@@ -35,7 +35,7 @@ jobs:
             ["availability-management/delete-availability-service"]="app-name-base2"
             ["availability-management/update-availability-service"]="app-name-base3"
             ["availability-management/list-availability-servicePy"]="app-name-base4"
-            ["booking-management/create-reservations-service"]="app-name-base4"
+            ["booking-management/create-reservations-service"]="microservice-creat-reservation"
             ["booking-management/cancel-reservations-service"]="microservice-canc-reservation"
             ["booking-management/Go_delete-reservations-service"]="app-name-base4"
             ["booking-management/history-reservations-service"]="microservice-list-reservation"

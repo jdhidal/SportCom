@@ -28,7 +28,7 @@ const ReservationForm = () => {
 
   const handleCreate = () => {
     if (newReservation.facility_name && newReservation.user_name && newReservation.reservation_date && newReservation.status) {
-      axios.post('http://localhost:3008/reservations', newReservation)
+      axios.post('https://microservice-creat-reservation-1bf2220dad45.herokuapp.com/reservations', newReservation)
         .then(response => {
           setReservations([...reservations, response.data]);
           setNewReservation({ facility_name: '', user_name: '', reservation_date: '', status: 'Pendiente' });
