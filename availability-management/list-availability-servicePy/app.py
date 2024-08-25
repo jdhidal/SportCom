@@ -30,4 +30,5 @@ def get_availability():
             connection.close()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3015)
+    port = int(os.getenv('PORT', 3015))
+    app.run(host='0.0.0.0', port=port)

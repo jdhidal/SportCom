@@ -13,7 +13,7 @@ const AvailabilityForm = () => {
   const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
-    axios.get('http://localhost:3015/availability')
+    axios.get('https://microservice-list-avail-b6a8271f65ce.herokuapp.com/availability')
       .then(response => setAvailabilities(response.data))
       .catch(error => console.error('Error fetching availabilities:', error));
   }, []);
