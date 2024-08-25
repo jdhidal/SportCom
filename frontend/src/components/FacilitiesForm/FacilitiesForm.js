@@ -11,7 +11,7 @@ const FacilitiesForm = () => {
 
   useEffect(() => {
     // Fetch facilities on component mount
-    axios.get('http://localhost:3007/facilities')
+    axios.get('https://microservice-list-facilities-5bf2e8830ec9.herokuapp.com/facilities')
       .then(response => setFacilities(response.data))
       .catch(error => console.error('Error fetching facilities:', error));
   }, []);
