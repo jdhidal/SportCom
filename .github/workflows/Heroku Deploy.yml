@@ -15,12 +15,20 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Login to Heroku
+        run: |
+          echo "${{ secrets.HEROKU_API_KEY }}" | heroku auth:token
+
       - name: Deploy to Heroku
-        if: github.event_name == 'push'
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}  # Variable de entorno secreta con la API key de Heroku
-          heroku_app_name: frontend-sportcom  # Nombre de tu aplicación en Heroku
-          heroku_email: diegohidalgo673@gmail.com  # Correo electrónico asociado con tu cuenta de Heroku
-          branch: master  # O la rama que quieras desplegar
-          folder: frontend  # Indica que el package.json está en la carpeta frontend
+        run: |
+          cd frontend
+          heroku git:remote -a frontend-sportcom
+          git add .
+          git commit -m "Deploy to Heroku"
+          git push heroku master:main
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
