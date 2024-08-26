@@ -21,7 +21,7 @@ jobs:
 
       - name: Login to Heroku
         run: |
-          echo "${{ secrets.HEROKU_API_KEY }}" | heroku auth:token
+          echo "${{ secrets.HEROKU_API_KEY }}"
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
