@@ -21,11 +21,14 @@ jobs:
 
       - name: Login to Heroku
         run: |
-          echo "${{ secrets.HEROKU_API_KEY }}" | heroku auth:token
+          heroku auth:token
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
       - name: Deploy to Heroku
         run: |
           cd frontend
+          git init
           heroku git:remote -a frontend-sportcom
           git add .
           git commit -m "Deploy to Heroku"
