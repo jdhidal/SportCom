@@ -19,7 +19,7 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}  # Variable de entorno secreta con la API key de Heroku
-          heroku_app_name: app-egraphql  # Nombre de tu aplicación en Heroku
+          heroku_app_name: frontend-sportcom  # Nombre de tu aplicación en Heroku
           heroku_email: diegohidalgo673@gmail.com  # Correo electrónico asociado con tu cuenta de Heroku
           branch: master  # La rama que estás utilizando para desplegar
           directory: frontend  # Especifica el subdirectorio de tu aplicación frontend
