@@ -22,4 +22,5 @@ jobs:
           heroku_app_name: frontend-sportcom  # Nombre de tu aplicación en Heroku
           heroku_email: diegohidalgo673@gmail.com  # Correo electrónico asociado con tu cuenta de Heroku
           branch: master  # La rama que estás utilizando para desplegar
+          usedirectory: true
           directory: frontend  # Especifica el subdirectorio de tu aplicación frontend
