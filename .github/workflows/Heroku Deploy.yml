@@ -47,7 +47,7 @@ jobs:
             ["user-management/login-service"]="microservice-login"
             ["user-management/logout-user-service"]="microservice-logout"
             ["user-management/wobsocket-service"]="microservice-websocket"
-            ["frontend"]="app-name-frontend"
+            ["frontend"]="frontend-sportcom"
           )
 
           # Iterar sobre los servicios para verificar cambios y desplegar
