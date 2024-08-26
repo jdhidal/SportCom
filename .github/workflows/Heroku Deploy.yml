@@ -14,6 +14,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Change Directory
+        run: cd frontend  # Cambia el directorio a 'frontend'
+
       - name: Deploy to Heroku
         if: github.event_name == 'push'
         uses: akhileshns/heroku-deploy@v3.12.12
