@@ -80,7 +80,7 @@ const MainPage = () => {
         </ul>
       </main>
       <footer className="main-page-footer">
-        <p>Footer content-Add continue</p>
+        <p>Footer content-Add continue test 2</p>
       </footer>
     </div>
   );
