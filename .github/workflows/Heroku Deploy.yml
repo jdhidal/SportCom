@@ -15,7 +15,9 @@ jobs:
           fetch-depth: 0
 
       - name: Change Directory
-        run: cd frontend  # Cambia el directorio a 'frontend'
+        run: 
+          BASE_DIR="$(pwd)"  
+          cd "$BASE_DIR/frontend"
 
       - name: Deploy to Heroku
         if: github.event_name == 'push'
