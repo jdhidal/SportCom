@@ -3,7 +3,7 @@ name: Heroku Deploy
 on:
   push:
     branches:
-      - master  # Cambia esto si usas una rama diferente
+      - master  # Cambia esto por el nombre de tu rama principal si es diferente
 
 jobs:
   deploy:
@@ -18,9 +18,8 @@ jobs:
         if: github.event_name == 'push'
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}  # Asegúrate de que la API key esté en tus secretos de GitHub
-          heroku_app_name: frontend-sportcom  # Reemplaza con el nombre de tu aplicación en Heroku
-          heroku_email: diegohidalgo673@gmail.com  # Reemplaza con tu correo de Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          working-directory: ./frontend  # Aquí especificamos la carpeta 'frontend' para el despliegue
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}  # Variable de entorno secreta con la API key de Heroku
+          heroku_app_name: app-egraphql  # Nombre de tu aplicación en Heroku
+          heroku_email: diegohidalgo673@gmail.com  # Correo electrónico asociado con tu cuenta de Heroku
+          branch: master  # La rama que estás utilizando para desplegar
+          directory: frontend  # Especifica el subdirectorio de tu aplicación frontend
