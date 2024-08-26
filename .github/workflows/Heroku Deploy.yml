@@ -3,7 +3,7 @@ name: Heroku Deploy
 on:
   push:
     branches:
-      - master
+      - master  # Cambia esto por el nombre de tu rama principal si es diferente
 
 jobs:
   deploy:
@@ -14,77 +14,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-          heroku --version
-          heroku auth:token
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          heroku_email: diegohidalgo673@gmail.com
-
-      - name: Detect Changes and Deploy
-        run: |
-          # Definir el directorio base
-          BASE_DIR="$(pwd)"
-
-          # Lista de servicios y apps
-          declare -A services
-          services=(
-            ["administrative-management/availability-log-service"]="microservice-avail-logs"
-            ["administrative-management/user-log-service"]="microservice-user-logs"
-            ["administrative-management/reservation-log-service"]="microservice-reserv-logs"
-            ["administrative-management/facilities-log-service"]="microservice-facilities-logs"
-            ["availability-management/create-availability-service"]="microservice-create-avail"
-            ["availability-management/delete-availability-service"]="microservice-delete-avail"
-            ["availability-management/update-availability-service"]="microservice-update-avail"
-            ["availability-management/list-availability-servicePy"]="microservice-list-avail"
-            ["booking-management/create-reservations-service"]="microservice-creat-reservation"
-            ["booking-management/cancel-reservations-service"]="microservice-canc-reservation"
-            ["booking-management/Go_delete-reservations-service"]="microservice-delet-reservation"
-            ["booking-management/history-reservations-service"]="microservice-list-reservation"
-            ["facilities-management/create-facilities-service"]="microservice-create-facilities"
-            ["facilities-management/delete-facilities-service"]="microservice-delete-facilities"
-            ["facilities-management/update-facilities-service"]="microservice-update-facilities"
-            ["facilities-management/list-facilities-service"]="microservice-list-facilities"
-            ["user-management/create-user-service"]="microservice-create-users"
-            ["user-management/login-service"]="microservice-login"
-            ["user-management/logout-user-service"]="microservice-logout"
-            ["user-management/wobsocket-service"]="microservice-websocket"
-            ["frontend"]="frontend-sportcom"
-          )
-
-          # Iterar sobre los servicios para verificar cambios y desplegar
-          for dir in "${!services[@]}"; do
-            if [ -d "$BASE_DIR/$dir" ]; then
-              echo "Checking directory $dir"
-              cd "$BASE_DIR/$dir" || exit 1
-              
-              # Verificar si hay cambios en el directorio
-              if [ $(git diff --name-only HEAD~1 | grep -e "^$dir" | wc -l) -gt 0 ]; then
-                echo "Changes detected in $dir, deploying to Heroku app ${services[$dir]}"
-                
-                # Configurar remoto solo si no existe
-                if ! git remote get-url heroku >/dev/null 2>&1; then
-                  git remote add heroku https://git.heroku.com/${services[$dir]}.git
-                fi
-
-                # Hacer push al remoto de Heroku
-                git push heroku master
-                
-                # Mostrar el estado y logs de la aplicación
-                heroku ps --app ${services[$dir]}
-                heroku logs --tail --app ${services[$dir]}
-              else
-                echo "No changes detected in $dir"
-              fi
-
-              # Volver al directorio base
-              cd "$BASE_DIR" || exit 1
-            else
-              echo "Directory $dir does not exist"
-            fi
-          done
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          heroku_email: diegohidalgo673@gmail.com
+      - name: Deploy to Heroku
+        if: github.event_name == 'push'
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}  # Variable de entorno secreta con la API key de Heroku
+          heroku_app_name: frontend-sportcom  # Nombre de tu aplicación en Heroku
+          heroku_email: diegohidalgo673@gmail.com  # Correo electrónico asociado con tu cuenta de Heroku
