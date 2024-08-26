@@ -18,6 +18,9 @@ jobs:
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
           heroku --version
+          heroku auth:token
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
       - name: Detect Changes and Deploy
         run: |
@@ -59,8 +62,16 @@ jobs:
               # Verificar si hay cambios en el directorio
               if [ $(git diff --name-only HEAD~1 | grep -e "^$dir" | wc -l) -gt 0 ]; then
                 echo "Changes detected in $dir, deploying to Heroku app ${services[$dir]}"
-                git remote add heroku https://git.heroku.com/${services[$dir]}.git
+                
+                # Configurar remoto solo si no existe
+                if ! git remote get-url heroku >/dev/null 2>&1; then
+                  git remote add heroku https://git.heroku.com/${services[$dir]}.git
+                fi
+
+                # Hacer push al remoto de Heroku
                 git push heroku master
+                
+                # Mostrar el estado y logs de la aplicación
                 heroku ps --app ${services[$dir]}
                 heroku logs --tail --app ${services[$dir]}
               else
