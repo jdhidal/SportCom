@@ -15,12 +15,13 @@ jobs:
           fetch-depth: 0
 
       - name: Change Directory
-        run: 
-          BASE_DIR="$(pwd)"  
-          cd "$BASE_DIR/frontend"
+        run: |
+          cd frontend
+          echo "Current directory contents:"
+          ls -la
+        # Este paso asegura que estamos en el directorio correcto y muestra los archivos
 
       - name: Deploy to Heroku
-        if: github.event_name == 'push'
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}  # Variable de entorno secreta con la API key de Heroku
