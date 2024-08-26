@@ -14,7 +14,7 @@ const app = express();
 
 // Middleware
 const corsOptions = {
-  origin: 'http://localhost:3021', // The URL of frontend
+  origin: 'https://frontend-sportcom-f6a797569cc5.herokuapp.com', // The URL of frontend
   credentials: true
 };
 app.use(cors(corsOptions));

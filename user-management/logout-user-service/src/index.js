@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 // Middleware for CORS
 app.use(cors({
-    origin: 'http://localhost:3021', 
+    origin: 'https://frontend-sportcom-f6a797569cc5.herokuapp.com', 
     credentials: true
   }));
 
@@ -32,7 +32,7 @@ app.use(express.json());
 // Logout route
 app.post('/logout', (req, res) => {
     
-    res.clearCookie('token', { httpOnly: true, sameSite: 'None', secure: true });
+    res.clearCookie('token', { path: '/', httpOnly: true, sameSite: 'None', secure: true });
     res.json({ message: 'Logout successful' });
 });
   

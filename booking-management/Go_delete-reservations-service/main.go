@@ -33,7 +33,7 @@ func main() {
 
 	// Configure CORS
 	corsHandler := cors.New(cors.Options{
-		AllowedOrigins: []string{"http://localhost:3021"},
+		AllowedOrigins: []string{"https://frontend-sportcom-f6a797569cc5.herokuapp.com"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Content-Type", "Authorization"},
 	})
